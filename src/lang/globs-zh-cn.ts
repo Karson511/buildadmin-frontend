@@ -48,4 +48,6 @@ export default {
     'Expand generic search': '展开通用搜索',
     'Link address': '链接地址',
     'No route found to jump~': '没有找到可以跳转的路由~',
+    yes: '是',
+    no: '否',
 }

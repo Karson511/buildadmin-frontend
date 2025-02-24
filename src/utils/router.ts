@@ -46,7 +46,7 @@ export const routePush = async (to: RouteLocationRaw) => {
 export const getFirstRoute = (routes: RouteRecordRaw[]): false | RouteRecordRaw => {
     const routerPaths: string[] = []
     const routers = router.getRoutes()
-    console.log("firstRoute", routers)
+    console.log('firstRoute', routers)
     routers.forEach((item) => {
         if (item.path) routerPaths.push(item.path)
     })

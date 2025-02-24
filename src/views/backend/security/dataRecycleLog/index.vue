@@ -44,6 +44,7 @@
 
 <script setup lang="ts">
 import { provide, onMounted } from 'vue'
+// 导出baTable类
 import baTableClass from '/@/utils/baTable'
 import { info, restore, url } from '/@/api/backend/security/dataRecycleLog'
 import InfoDialog from './info.vue'

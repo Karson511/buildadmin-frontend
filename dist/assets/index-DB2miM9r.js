@@ -1,0 +1,1 @@
+import{c as o,w as r}from"./index-CxitZ9U6.js";const e="/admin/Index/";function i(){return console.log("backend: index"),o({url:e+"index",method:"get"})}function u(n,t={}){return o({url:e+"login",data:t,method:n})}function d(){const n=r();return o({url:e+"logout",method:"POST",data:{refreshToken:n.getToken("refresh")}})}export{d as a,i,u as l};

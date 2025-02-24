@@ -228,7 +228,10 @@ export const fullUrl = (relativeUrl: string, domain = '') => {
 
     const regUrl = new RegExp(/^http(s)?:\/\//)
     const regexImg = new RegExp(/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i)
-    if (!domain || regUrl.test(relativeUrl) || regexImg.test(relativeUrl)) {
+    // if (!domain || regUrl.test(relativeUrl) || regexImg.test(relativeUrl)) {
+    //     return relativeUrl
+    // }
+    if (!domain || regUrl.test(relativeUrl)) {
         return relativeUrl
     }
     return domain + relativeUrl

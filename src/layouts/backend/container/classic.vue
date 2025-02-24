@@ -4,7 +4,6 @@
         <el-container class="content-wrapper">
             <Header />
             <Main />
-            classic
         </el-container>
     </el-container>
     <CloseFullScreen v-if="navTabs.state.tabFullScreen" />

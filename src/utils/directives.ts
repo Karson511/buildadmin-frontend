@@ -25,6 +25,8 @@ export function directives(app: App) {
 function authDirective(app: App) {
     // 注册一个全局自定义指令
     app.directive('auth', {
+        // 在绑定元素的父组件
+        // 及他自己的所有子节点都挂载完成后调用
         mounted(el, binding) {
             if (!binding.value) return false
             if (!auth(binding.value)) el.parentNode.removeChild(el)
@@ -38,6 +40,8 @@ function authDirective(app: App) {
  */
 function tableLateralDragDirective(app: App) {
     app.directive('tableLateralDrag', {
+        // 在绑定元素的 attribute 前
+        // 或事件监听器应用前调用
         created(el) {
             new horizontalScroll(el.querySelector('.el-table__body-wrapper .el-scrollbar .el-scrollbar__wrap'))
         },

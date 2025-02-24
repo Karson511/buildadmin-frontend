@@ -4,7 +4,7 @@ import { useAdminInfo } from '/@/stores/adminInfo'
 export const url = '/admin/Index/'
 
 export function index() {
-    console.log("backend: index")
+    console.log('backend: index')
     return createAxios({
         url: url + 'index',
         method: 'get',

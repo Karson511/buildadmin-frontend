@@ -1,7 +1,7 @@
 export default {
     'Last logged in on': '上次登录于',
-    'user name': '用户名',
-    'User nickname': '用户昵称',
+    'User name': '用户名',
+    nickname: '用户昵称',
     'Please enter a nickname': '请输入昵称',
     'e-mail address': '邮箱地址',
     'phone number': '手机号码',

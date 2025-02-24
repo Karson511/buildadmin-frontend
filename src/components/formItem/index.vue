@@ -6,8 +6,9 @@ import type { InputAttr, InputData, ModelValueTypes } from '/@/components/baInpu
 import { inputTypes } from '/@/components/baInput'
 import BaInput from '/@/components/baInput/index.vue'
 import type { FormItemAttr } from '/@/components/formItem'
-
+// vue 组件提供的类型推导的辅助函数
 export default defineComponent({
+    // 定义组件名称
     name: 'formItem',
     props: {
         // 输入框类型,支持的输入框见 inputTypes

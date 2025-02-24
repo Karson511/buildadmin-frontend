@@ -13,7 +13,7 @@ export default class baTable {
     // API实例
     public api
 
-    /* 表格状态-s 属性对应含义请查阅 BaTable 的类型定义 */
+    /* 表格状态-s 属性对应含义请查阅 BaTable 的类型定义, 声明响应式状态 */
     public table: BaTable = reactive({
         ref: undefined,
         pk: 'id',
@@ -188,7 +188,7 @@ export default class baTable {
     onSubmit = (formEl: FormInstance | undefined = undefined) => {
         // 当前操作的首字母小写
         const operate = this.form.operate!.replace(this.form.operate![0], this.form.operate![0].toLowerCase())
-
+        console.log(operate)
         if (this.runBefore('onSubmit', { formEl: formEl, operate: operate, items: this.form.items! }) === false) return
 
         Object.keys(this.form.items!).forEach((item) => {
@@ -296,7 +296,6 @@ export default class baTable {
                 'com-search',
                 () => {
                     this.table.filter!.search = this.getComSearchData()
-
                     // 刷新表格
                     this.onTableHeaderAction('refresh', { event: 'com-search', data: this.table.filter!.search })
                 },
@@ -325,6 +324,8 @@ export default class baTable {
             [
                 'refresh',
                 () => {
+                    console.log('refresh')
+                    console.log(event, data)
                     // 刷新表格在大多数情况下无需置空 data，但任需防范表格列组件的 :key 不会被更新的问题，比如关联表的数据列
                     this.table.data = []
                     this.getIndex()

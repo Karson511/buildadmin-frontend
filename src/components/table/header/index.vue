@@ -1,5 +1,5 @@
 <template>
-    <!-- 通用搜索 -->
+    <!-- 通用搜索, transition vue的内置组件, 在一个元素或组件进入和离开 DOM 时应用动画 -->
     <transition name="el-zoom-in-bottom" mode="out-in">
         <ComSearch v-show="props.buttons.includes('comSearch') && baTable.table.showComSearch">
             <template v-for="(slot, idx) in $slots" :key="idx" #[idx]>
@@ -29,6 +29,7 @@
                 <span class="table-header-operate-text">{{ t('Edit') }}</span>
             </el-button>
         </el-tooltip>
+        <!-- :confirm-button-text绑定一个属性-->
         <el-popconfirm
             v-if="props.buttons.includes('delete') && baTable.auth('del')"
             @confirm="onAction('delete')"
@@ -133,8 +134,9 @@ import ComSearch from '/@/components/table/comSearch/index.vue'
 import type baTableClass from '/@/utils/baTable'
 
 const { t } = useI18n()
+// 上级模板中获取baTable的数据, as 类型断言，  inject('baTable')是baTableClass类型
 const baTable = inject('baTable') as baTableClass
-
+// 定义Props接口
 interface Props {
     buttons: HeaderOptButton[]
     quickSearchPlaceholder?: string
