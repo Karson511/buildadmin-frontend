@@ -32,6 +32,7 @@ export default {
     failed: '不通过',
     'Take Orders': '接单',
     'Operational Star': '运营标星',
+    Province: '省份',
     City: '城市',
     'Join Time': '注册时间',
     'Create Time': '入驻时间',
@@ -47,4 +48,7 @@ export default {
     Price: '价格',
     Yuan: '元',
     Remark: '备注',
+    'Job occupation': '职业',
+    'Registration time': '注册时间',
+    'Application time': '申请入驻时间',
 }

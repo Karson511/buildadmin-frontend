@@ -1,5 +1,11 @@
 <template>
-    <el-dialog class="ba-operate-dialog" :model-value="baTable.form.operate ? true : false" @close="baTable.toggleForm">
+    <el-dialog
+        class="ba-operate-dialog"
+        :close-on-click-modal="false"
+        :destroy-on-close="true"
+        :model-value="baTable.form.operate ? true : false"
+        @close="baTable.toggleForm"
+    >
         <template #header>
             <div class="title" v-drag="['.ba-operate-dialog', '.el-dialog__header']" v-zoom="'.ba-operate-dialog'">{{ t('Info') }}</div>
         </template>
@@ -12,7 +18,7 @@
                 <el-form
                     ref="formRefInfo"
                     @keyup.enter="baTable.onSubmit(formRefInfo)"
-                    :model="baTable.form.items"
+                    :model="baTable.form.extend!.info"
                     :label-position="config.layout.shrink ? 'top' : 'right'"
                     :label-width="baTable.form.labelWidth + 'px'"
                     v-if="!baTable.form.loading"
@@ -73,7 +79,7 @@
                                     size="default"
                                 >
                                     {{
-                                        typeof baTable.form.extend!.info.profile?.operational_star !== 'undefined'
+                                        typeof baTable.form.extend!.info.profile.operational_star !== 'undefined'
                                             ? yesNoValue[baTable.form.extend!.info.profile?.operational_star] ??
                                               baTable.form.extend!.info.profile?.operational_star
                                             : baTable.form.extend!.info.profile?.operational_star
@@ -122,25 +128,19 @@
                                     </el-col>
                                 </el-row>
                             </el-descriptions-item>
-                            <el-descriptions-item :label="t('shop.user.Chat Duration')">
-                                {{ baTable.form.extend!.info.chat?.chat_duration }} {{ t('shop.user.Minute') }}
-                            </el-descriptions-item>
-                            <el-descriptions-item :label="t('shop.user.Price')">
-                                {{ baTable.form.extend!.info.chat?.chat_price }} {{ t('shop.user.Yuan') }}
-                            </el-descriptions-item>
                         </div>
                     </el-descriptions>
 
                     <el-descriptions
                         title=""
-                        v-if="!isEmpty(baTable.form.extend!.info.review)"
+                        v-if="!isEmpty(baTable.form.extend!.info?.review)"
                         :column="1"
                         direction="vertical"
                         style="margin-top: 20px"
                         border
                     >
                         <el-descriptions-item :label="t('shop.user.Review Record')">
-                            <el-row class="ba-array-item" v-for="(data, rid) in baTable.form.extend!.info.review" :gutter="10" :key="rid">
+                            <el-row class="ba-array-item" v-for="(data, rid) in baTable.form.extend.info.review" :gutter="10" :key="rid">
                                 <el-col :span="24" v-if="data.type === 0"> <b>申请时间:</b> {{ timeFormat(data.create_time) }} </el-col>
                                 <el-col :span="24" v-else="data.type === 1">
                                     <b>审核时间:</b> {{ timeFormat(data.update_time) }} <b>审核结果:</b> {{ reviewReplaceValue[data.status] }}
@@ -151,9 +151,9 @@
                         </el-descriptions-item>
                     </el-descriptions>
 
-                    <el-descriptions title="信息变更记录" v-if="!isEmpty(baTable.form.extend!.info.log)" :column="1" style="margin-top: 20px" border>
+                    <el-descriptions title="信息变更记录" v-if="!isEmpty(baTable.form.extend!.info?.log)" :column="1" style="margin-top: 20px" border>
                         <el-descriptions-item :label="t('shop.user.Price')">
-                            {{ baTable.form.extend!.info.chat.chat_price }}
+                            {{ baTable.form.extend!.info.chat?.chat_price }}
                         </el-descriptions-item>
                     </el-descriptions>
                     <el-descriptions :column="1" style="margin-top: 20px" border v-if="!isEmpty(baTable.form.extend!.info.profile)">
@@ -161,7 +161,7 @@
                             <FormItem
                                 label=""
                                 type="radio"
-                                v-model="baTable.form.items!.profile.status"
+                                v-model="baTable.form.extend.info.profile.status"
                                 :input-attr="{
                                     border: false,
                                     content: { enable: t('shop.user.pass'), disable: t('shop.user.failed') },
@@ -169,9 +169,9 @@
                                 }"
                             />
                         </el-descriptions-item>
-                        <el-descriptions-item :label="t('shop.user.Remark')" v-if="baTable.form.items!.profile.status === 'disable'">
+                        <el-descriptions-item :label="t('shop.user.Remark')" v-if="baTable.form.extend!.info.profile.status === 'disable'">
                             <el-input
-                                v-model="baTable.form.items!.profile.remark"
+                                v-model="baTable.form.extend.info.profile.remark"
                                 :rows="3"
                                 maxlength="100"
                                 show-word-limit
@@ -181,7 +181,7 @@
                         </el-descriptions-item>
                         <el-descriptions-item :label="t('shop.user.Operational Star')">
                             <el-checkbox
-                                v-model="baTable.form.items!.profile.operational_star"
+                                v-model="baTable.form.extend.info.profile.operational_star"
                                 :checked="isChecked"
                                 label=""
                                 true-value="1"
@@ -189,7 +189,7 @@
                             />
                         </el-descriptions-item>
                     </el-descriptions>
-                    <div class="mb-4" style="margin-top: 10px; text-align: center" v-if="!isEmpty(baTable.form.extend!.info!.profile)">
+                    <div class="mb-4" style="margin-top: 10px; text-align: center" v-if="!isEmpty(baTable.form.extend!.info?.profile)">
                         <el-button v-blur :loading="baTable.form.submitLoading" @click="baTable.onSubmit(formRefInfo)" type="success"
                             >审核通过</el-button
                         >
@@ -228,14 +228,14 @@ const { t } = useI18n()
 const stateReplaceValue = { disable: t('Disable'), enable: t('Enable') }
 const reviewReplaceValue = { disable: t('shop.user.failed'), enable: t('shop.user.pass') }
 const yesNoValue = { '0': t('no'), '1': t('yes') }
-const isChecked = computed(() => (baTable.form.items!.profile.operational_star == 1 ? true : false))
+const isChecked = computed(() => (baTable.form.extend.info!.profile.operational_star == 1 ? true : false))
 const remark = ref('')
 const onChangeRemark = () => {
-    if (baTable.form.items!.profile.status === 'enable') {
-        remark.value = baTable.form.items!.profile.remark
-        baTable.form.items!.profile.remark = ''
+    if (baTable.form.extend.info.profile?.status === 'enable') {
+        remark.value = baTable.form.extend.info.profile.remark
+        baTable.form.extend.info.profile.remark = ''
     } else {
-        baTable.form.items!.profile.remark = remark.value
+        baTable.form.extend.info.profile.remark = remark.value
     }
 }
 </script>

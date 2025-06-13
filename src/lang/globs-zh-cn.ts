@@ -21,6 +21,7 @@ export default {
     Reminder: '温馨提示',
     Disable: '禁用',
     Enable: '启用',
+    Pending: '待处理',
     Shrink: '收缩',
     Open: '展开',
     Search: '搜索',

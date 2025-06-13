@@ -1,6 +1,7 @@
 <template>
     <div>
         <template v-if="isArray(cellValue)">
+            <!-- 为了给 Vue 一个提示，以便它可以跟踪每个节点的标识，从而重用和重新排序现有的元素，你需要为每个元素对应的块提供一个唯一的 key attribute --->
             <template v-for="(tag, idx) in cellValue" :key="idx">
                 <el-tag
                     v-if="tag != ''"

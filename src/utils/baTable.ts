@@ -61,6 +61,8 @@ export default class baTable {
 
     constructor(api: baTableApi, table: BaTable, form: BaTableForm = {}, before: BaTableBefore = {}, after: BaTableAfter = {}) {
         this.api = api
+        //Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象source复制到目标对象。它将返回目标对象target
+        // 注意：如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性。
         this.form = Object.assign(this.form, form)
         this.table = Object.assign(this.table, table)
         this.before = before
