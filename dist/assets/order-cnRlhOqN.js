@@ -1,0 +1,1 @@
+const e={"User nickname":"用户昵称","User ID":"用户ID","Blogger ID":"博主ID","Blogger nickname":"博主昵称","Order sn":"订单编号",Remark:"备注",Status:"订单状态","Accept time":"接单时间","Complete time":"订单完成时间","Create time":"下单时间","Cancel time":"订单取消时间","Order pending":"待接单","Order calling":"待通话","Order completed":"已完成","Order cancelled":"已取消"};export{e as default};
