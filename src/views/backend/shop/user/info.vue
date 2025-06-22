@@ -59,7 +59,7 @@
                             </el-descriptions-item>
                             <el-descriptions-item :label="t('shop.user.Take Orders')">
                                 <el-tag
-                                    :type="baTable.form.extend!.info.profile?.is_take_orders === '1' ? 'success' : 'danger'"
+                                    :type="baTable.form.extend!.info.profile?.is_take_orders === 1 ? 'success' : 'danger'"
                                     effect="light"
                                     size="default"
                                 >
