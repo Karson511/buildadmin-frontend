@@ -77,8 +77,17 @@ const baTable = new baTableClass(
                 operator: false,
                 //operatorPlaceholder: t('Fuzzy query'),
             },
-
-            { label: t('order.order.Remark'), prop: 'remark', align: 'center', operator: false },
+            {
+                label: t('order.order.Topic'),
+                render: 'customTemplate',
+                customTemplate: (row, field, cellValue, column, index) => {
+                    return row.topic.title
+                },
+                prop: 'topic.title',
+                align: 'center',
+                operator: false,
+            },
+            { label: t('order.order.Remark'), prop: 'remark', align: 'center', show: false, operator: false },
             {
                 label: t('order.order.Status'),
                 prop: 'status',
@@ -107,6 +116,7 @@ const baTable = new baTableClass(
                 prop: 'accept_time',
                 align: 'center',
                 render: 'datetime',
+                show: false,
                 //sortable: 'custom',
                 operator: false,
             },
@@ -117,12 +127,14 @@ const baTable = new baTableClass(
                 render: 'datetime',
                 //sortable: 'custom',
                 operator: false,
+                show: false,
             },
             {
                 label: t('order.order.Cancel time'),
                 prop: 'cancel_time',
                 align: 'center',
                 render: 'datetime',
+                show: false,
                 //sortable: 'custom',
                 operator: false,
             },

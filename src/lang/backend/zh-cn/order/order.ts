@@ -6,6 +6,7 @@ export default {
     'Order sn': '订单编号',
     Remark: '备注',
     Status: '订单状态',
+    Topic: '话题',
     'Accept time': '接单时间',
     'Complete time': '订单完成时间',
     'Create time': '下单时间',
