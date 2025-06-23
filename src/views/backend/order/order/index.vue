@@ -81,7 +81,7 @@ const baTable = new baTableClass(
                 label: t('order.order.Topic'),
                 render: 'customTemplate',
                 customTemplate: (row, field, cellValue, column, index) => {
-                    return row.topic.title
+                    return row.topic?.title ?? '-'
                 },
                 prop: 'topic.title',
                 align: 'center',
