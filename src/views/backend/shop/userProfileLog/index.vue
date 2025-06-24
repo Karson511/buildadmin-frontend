@@ -5,30 +5,9 @@
         <!-- 'add', 'edit', 'delete', -->
         <TableHeader
             :buttons="['refresh', 'comSearch', 'quickSearch', 'columnDisplay']"
-            :quick-search-placeholder="t('Quick search placeholder', { fields: t('shop.user.User name') + '/' + t('shop.user.nickname') })"
+            :quick-search-placeholder="t('Quick search placeholder', { fields: t('shop.userProfileLog.nickname') })"
         >
-            <template #refreshAppend>
-                <!-- <el-tooltip placement="top" :content="t('shop.user.Pending approval')">
-                    <el-button v-blur @click="approvalClick.call()" class="table-header-operate" type="success">
-                        <span class="table-header-operate-text">{{ t('shop.user.Pending approval') }}</span>
-                    </el-button>
-                </el-tooltip>
-                <el-tooltip placement="top" :content="t('shop.user.Approved')">
-                    <el-button v-blur @click="onAction('refresh', { loading: true })" class="table-header-operate" type="danger">
-                        <span class="table-header-operate-text">{{ t('shop.user.Approved') }}</span>
-                    </el-button>
-                </el-tooltip>
-                <el-tooltip placement="top" :content="t('shop.user.Not approved')">
-                    <el-button v-blur @click="onAction('refresh', { loading: true })" class="table-header-operate" type="danger">
-                        <span class="table-header-operate-text">{{ t('shop.user.Not approved') }}</span>
-                    </el-button>
-                </el-tooltip> -->
-                <el-tooltip placement="top" :content="t('shop.user.Registration not submitted')">
-                    <el-button v-blur @click="onAction('refresh', { loading: true })" class="table-header-operate" type="danger">
-                        <span class="table-header-operate-text">{{ t('shop.user.Registration not submitted') }}</span>
-                    </el-button>
-                </el-tooltip>
-            </template>
+            <template #refreshAppend> </template>
         </TableHeader>
 
         <!-- 表格 -->
@@ -245,12 +224,14 @@ const baTable = new baTableClass(
     {
         column: [
             { type: 'selection', align: 'center', operator: false },
-            { label: t('Id'), prop: 'id', align: 'center', operator: '=', operatorPlaceholder: t('Id'), width: 70 },
+            { label: t('Id'), prop: 'id', align: 'center', operator: false, width: 70 },
             {
                 label: t('shop.userProfileLog.User ID'),
                 prop: 'shop_user_id',
                 align: 'center',
-                operator: false,
+                operator: '=',
+                operatorPlaceholder: t('shop.userProfileLog.User ID'),
+                width: 100,
             },
             {
                 label: t('shop.userProfileLog.nickname'),
@@ -260,8 +241,8 @@ const baTable = new baTableClass(
                 operatorPlaceholder: t('Fuzzy query'),
             },
             { label: t('shop.userProfileLog.Modify field'), prop: 'modify_field_name', align: 'center', operator: false },
-            { render: 'slot', slotName: 'modifyContent', operator: false },
             { render: 'slot', slotName: 'originContent', operator: false },
+            { render: 'slot', slotName: 'modifyContent', operator: false },
             {
                 label: t('shop.userProfileLog.Review'),
                 prop: 'status',
