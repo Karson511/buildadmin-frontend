@@ -7,4 +7,5 @@ export default {
     'Pay amount': '支付金额(元)',
     'Pay time': '支付时间',
     Paid: '是否已支付',
+    'Created time': '创建时间',
 }

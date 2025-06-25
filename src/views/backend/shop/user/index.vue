@@ -144,6 +144,14 @@ const baTable = new baTableClass(
                 replaceValue: { '0': t('no'), '1': t('yes') },
             },
             {
+                label: t('shop.user.Take Orders'),
+                prop: 'profile.is_take_orders',
+                align: 'center',
+                render: 'tag',
+                custom: { '0': 'danger', '1': 'success' },
+                replaceValue: { '0': t('no'), '1': t('yes') },
+            },
+            {
                 label: t('shop.user.Review Result'),
                 prop: 'profile.status',
                 align: 'center',

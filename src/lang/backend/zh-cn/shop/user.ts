@@ -50,5 +50,5 @@ export default {
     Remark: '备注',
     'Job occupation': '职业',
     'Registration time': '注册时间',
-    'Application time': '申请入驻时间',
+    'Application time': '入驻时间',
 }
