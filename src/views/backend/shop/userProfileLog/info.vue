@@ -42,7 +42,6 @@
 
         <template #footer> </template>
     </el-dialog>
-    <VideoDialog />
 </template>
 
 <script setup lang="ts">
@@ -55,10 +54,8 @@ import { isEmpty } from 'lodash-es'
 import { ElMessageBox } from 'element-plus'
 import type { FormInstance, FormItemRule } from 'element-plus'
 import FormItem from '/@/components/formItem/index.vue'
-import elVideo from './video.vue'
 import { useConfig } from '/@/stores/config'
 import { autoResetRef } from '@vueuse/core'
-import VideoDialog from './video.vue'
 import { changeState } from '/@/api/backend/module'
 import { el } from 'element-plus/es/locales.mjs'
 

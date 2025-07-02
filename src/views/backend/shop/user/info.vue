@@ -90,7 +90,7 @@
                                 {{ baTable.form.extend!.info.introduction }}
                             </el-descriptions-item>
                             <el-descriptions-item :width="120" :span="2" :label="t('shop.user.Readme')">
-                                {{ baTable.form.extend!.info.profile?.readme }}
+                                <span v-html="baTable.form.extend!.info.profile?.readme"></span>
                             </el-descriptions-item>
                             <el-descriptions-item
                                 :width="120"
@@ -122,11 +122,9 @@
                                 />
                             </el-descriptions-item>
                             <el-descriptions-item :label="t('shop.user.Topic')" span="2">
-                                <el-row class="ba-array-item" v-for="(item, idx) in baTable.form.extend!.info.topic" :gutter="10" :key="idx">
-                                    <el-col :span="24">
-                                        {{ item.title }}
-                                    </el-col>
-                                </el-row>
+                                <el-card shadow="always" v-for="item in baTable.form.extend!.info.topic" :key="item.id">
+                                    <span v-html="item.title"></span>
+                                </el-card>
                             </el-descriptions-item>
                         </div>
                     </el-descriptions>
@@ -200,7 +198,6 @@
 
         <template #footer> </template>
     </el-dialog>
-    <VideoDialog />
 </template>
 
 <script setup lang="ts">
@@ -216,7 +213,7 @@ import FormItem from '/@/components/formItem/index.vue'
 import elVideo from './video.vue'
 import { useConfig } from '/@/stores/config'
 import { autoResetRef } from '@vueuse/core'
-import VideoDialog from './video.vue'
+// import VideoDialog from './video.vue'
 import { changeState } from '/@/api/backend/module'
 import { el } from 'element-plus/es/locales.mjs'
 
@@ -230,6 +227,7 @@ const reviewReplaceValue = { disable: t('shop.user.failed'), enable: t('shop.use
 const yesNoValue = { '0': t('no'), '1': t('yes') }
 const isChecked = computed(() => (baTable.form.extend.info!.profile.operational_star == 1 ? true : false))
 const remark = ref('')
+
 const onChangeRemark = () => {
     if (baTable.form.extend.info.profile?.status === 'enable') {
         remark.value = baTable.form.extend.info.profile.remark
