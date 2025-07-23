@@ -92,7 +92,7 @@ function getLangFileMessage(mList: any, locale: string) {
             }
         }
     }
-    console.log('langPath', msg)
+    // console.log('langPath', msg)
     return msg
 }
 

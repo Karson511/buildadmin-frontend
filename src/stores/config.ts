@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { reactive } from 'vue'
 import { STORE_CONFIG } from '/@/stores/constant/cacheKey'
 import type { Lang, Layout } from '/@/stores/interface'
-
+// 定义Store, defineStore 第一个参数为Store的id，在应用中保持唯一性, 第二个参数为Store的配置
 export const useConfig = defineStore(
     'config',
     () => {

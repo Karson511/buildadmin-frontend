@@ -158,6 +158,7 @@ export const buildJsonToElTreeData = (data: any): ElTreeData[] => {
  * @param path 不传递则通过当前路由 path 检查
  */
 export const isAdminApp = (path = '') => {
+    console.log('isAdminApp', path)
     const regex = new RegExp(`^${adminBaseRoutePath}`)
     if (path) {
         return regex.test(path)
@@ -242,6 +243,7 @@ export const fullUrl = (relativeUrl: string, domain = '') => {
  */
 export const getCurrentRoutePath = () => {
     let path = router.currentRoute.value.path
+    console.log('currentRouterPath', path)
     if (path == '/') path = trimStart(window.location.hash, '#')
     if (path.indexOf('?') !== -1) path = path.replace(/\?.*/, '')
     return path

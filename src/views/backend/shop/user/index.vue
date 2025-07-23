@@ -24,7 +24,7 @@
                     </el-button>
                 </el-tooltip> -->
                 <el-tooltip placement="top" :content="t('shop.user.Registration not submitted')">
-                    <el-button v-blur @click="onAction('refresh', { loading: true })" class="table-header-operate" type="danger">
+                    <el-button v-blur @click="noProfileClick()" class="table-header-operate" type="danger">
                         <span class="table-header-operate-text">{{ t('shop.user.Registration not submitted') }}</span>
                     </el-button>
                 </el-tooltip>
@@ -238,10 +238,12 @@ const infoButtonClick = (id: string) => {
             baTable.table.loading = false
         })
 }
-const approvalClick = () => {
+const noProfileClick = () => {
     baTable.form.loading = true
+    let searchData = baTable.getComSearchData()
+    searchData.push({ field: 'profile.shop_user_id', val: '', operator: 'NULL', render: 'tag' })
     baTable.api
-        .index({ search: [{ field: 'profile.review', val: '1', operator: 'eq', render: 'tag' }] })
+        .index({ search: searchData })
         .then((res) => {
             // res.data.row.data =
             baTable.table.data = res.data.list

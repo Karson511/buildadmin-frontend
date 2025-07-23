@@ -10,14 +10,18 @@ import { useConfig } from '/@/stores/config'
 import { isAdminApp } from '/@/utils/common'
 import { uniq } from 'lodash-es'
 
+// 创建路由实例
 const router = createRouter({
+    // 创建路由hash模式历史
     history: createWebHashHistory(),
     routes: staticRoutes,
 })
 
 router.beforeEach((to, from, next) => {
-    console.log('from.path > to.path, to.fullPath:', decodeURI(from.path), ' > ', decodeURI(to.path), ',', decodeURI(to.fullPath))
+    console.log('from.path > to.path, to.fullPath:', ' = ', decodeURI(from.path), ' > ', decodeURI(to.path), ',', decodeURI(to.fullPath))
+    // 是否显示旋转器
     NProgress.configure({ showSpinner: false })
+    // 页面顶部加载的进度条开始
     NProgress.start()
     if (!window.existLoading) {
         loading.show()
@@ -26,11 +30,14 @@ router.beforeEach((to, from, next) => {
 
     // 按需动态加载页面的语言包-start
     let loadPath: string[] = []
+    // 初始化页面布局和设置
     const config = useConfig()
+    // 加载页面语言包
     if (to.path in langAutoLoadMap) {
         loadPath.push(...langAutoLoadMap[to.path as keyof typeof langAutoLoadMap])
     }
     let prefix = ''
+    console.log('to.fullPath:', to.fullPath)
     if (isAdminApp(to.fullPath)) {
         prefix = './backend/' + config.lang.defaultLang
 
@@ -59,7 +66,6 @@ router.beforeEach((to, from, next) => {
 
     // 去重
     loadPath = uniq(loadPath)
-
     for (const key in loadPath) {
         loadPath[key] = loadPath[key].replaceAll('${lang}', config.lang.defaultLang)
         if (loadPath[key] in window.loadLangHandle) {

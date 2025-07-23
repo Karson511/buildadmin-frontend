@@ -18,7 +18,7 @@ async function start() {
     const app = createApp(App)
     // 安装状态管理库插件
     app.use(pinia)
-    console.warn("main.ts")
+    console.log('main.ts')
     // 全局语言包加载
     await loadLang(app)
 
@@ -33,7 +33,7 @@ async function start() {
     app.mount('#app')
 
     // modules start mark, Please do not remove.
-    // 注册一个能够被应用内所有组件实例zh访问到的全局属性对象，实现任意2个组件中传值, eventBus vue2的事件总线, vue3使用mitt或者tiny-emitter替换 
+    // 注册一个能够被应用内所有组件实例zh访问到的全局属性对象，实现任意2个组件中传值, eventBus vue2的事件总线, vue3使用mitt或者tiny-emitter替换
     // https://v3-migration.vuejs.org/zh/breaking-changes/events-api
     // https://cn.vuejs.org/api/application.html#app-config-globalproperties
     app.config.globalProperties.eventBus = mitt()
