@@ -17,12 +17,12 @@
                     <el-button v-blur @click="onAction('refresh', { loading: true })" class="table-header-operate" type="danger">
                         <span class="table-header-operate-text">{{ t('shop.user.Approved') }}</span>
                     </el-button>
-                </el-tooltip>
-                <el-tooltip placement="top" :content="t('shop.user.Not approved')">
-                    <el-button v-blur @click="onAction('refresh', { loading: true })" class="table-header-operate" type="danger">
-                        <span class="table-header-operate-text">{{ t('shop.user.Not approved') }}</span>
-                    </el-button>
                 </el-tooltip> -->
+                <el-tooltip placement="top" :content="t('shop.user.Registration submitted')">
+                    <el-button v-blur @click="onAction('refresh', { loading: true })" class="table-header-operate" type="danger">
+                        <span class="table-header-operate-text">{{ t('shop.user.Registration submitted') }}</span>
+                    </el-button>
+                </el-tooltip>
                 <el-tooltip placement="top" :content="t('shop.user.Registration not submitted')">
                     <el-button v-blur @click="noProfileClick()" class="table-header-operate" type="danger">
                         <span class="table-header-operate-text">{{ t('shop.user.Registration not submitted') }}</span>

@@ -32,7 +32,7 @@ export const getUrl = (): string => {
  */
 export const getUrlPort = (): string => {
     const url = getUrl()
-    console.log("getUrlPost:", url)
+    console.log('getUrlPost:', url)
     return new URL(url).port
 }
 
@@ -40,12 +40,18 @@ export const getUrlPort = (): string => {
  * 创建`Axios`
  * 默认开启`reductDataFormat(简洁响应)`,返回类型为`ApiPromise`
  * 关闭`reductDataFormat`,返回类型则为`AxiosPromise`
+ * Data: 简洁响应
+ * T 响应数据类型
+ * @param axiosConfig `Axios`请求配置
+ * @param options 自定义选项
+ * @param loading `ElementPlus`的`loading`配置
+ * @returns `AxiosPromise`
  */
 function createAxios<Data = any, T = ApiPromise<Data>>(axiosConfig: AxiosRequestConfig, options: Options = {}, loading: LoadingOptions = {}): T {
     const config = useConfig()
     const adminInfo = useAdminInfo()
     const userInfo = useUserInfo()
-    console.log("createAxios:", getUrl())
+    console.log('createAxios:', getUrl())
     const Axios = axios.create({
         baseURL: getUrl(),
         timeout: 1000 * 10,
@@ -57,11 +63,11 @@ function createAxios<Data = any, T = ApiPromise<Data>>(axiosConfig: AxiosRequest
     })
 
     // 自定义后台入口
-    console.log("axiosConfig.url before: ", axiosConfig.url)
-    console.log("adminBaseRoute path: ", adminBaseRoute.path)
+    console.log('axiosConfig.url before: ', axiosConfig.url)
+    console.log('adminBaseRoute path: ', adminBaseRoute.path)
     if (adminBaseRoute.path != '/admin' && isAdminApp() && /^\/admin\//.test(axiosConfig.url!)) {
         axiosConfig.url = axiosConfig.url!.replace(/^\/admin\//, adminBaseRoute.path + '.php/')
-        console.log("axiosConfig.url after: ", axiosConfig.url);
+        console.log('axiosConfig.url after: ', axiosConfig.url)
     }
 
     // 合并默认请求选项

@@ -23,6 +23,7 @@ export default {
     Approved: '审核通过',
     'Not approved': '审核不通过',
     'Pending approval': '待审核',
+    'Registration submitted': '注册已入驻',
     'Registration not submitted': '注册未入驻',
     review: '审核',
     'Review Result': '审核结果',

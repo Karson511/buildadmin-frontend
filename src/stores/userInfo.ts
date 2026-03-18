@@ -38,6 +38,7 @@ export const useUserInfo = defineStore('userInfo', {
             const field = type == 'auth' ? 'token' : 'refresh_token'
             this[field] = token
         },
+        // 获取token, type参数只允许录入auth或者refresh，默认auth
         getToken(type: 'auth' | 'refresh' = 'auth') {
             return type === 'auth' ? this.token : this.refresh_token
         },
