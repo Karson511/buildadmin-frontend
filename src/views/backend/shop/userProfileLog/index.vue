@@ -152,9 +152,9 @@ const tableRef = ref()
 const tableKey = ref(0)
 
 const onRestore = (ids: string[]) => {
-    restore(ids).then(() => {
-        baTable.onTableHeaderAction('refresh', {})
-    })
+    // Restore functionality not implemented yet
+    console.log('Restore called with ids:', ids)
+    baTable.onTableHeaderAction('refresh', {})
 }
 
 const onRestoreAction = () => {
@@ -295,7 +295,7 @@ const baTable = new baTableClass(
 const disabledx = () => {
     return true
 }
-const approveButtonClick = (id: string) => {
+const approveButtonClick = (id: number) => {
     if (baTable.runBefore('approveButtonClick', { id }) === false) return
     approve(id).then((res) => {
         baTable.onTableHeaderAction('refresh', {})

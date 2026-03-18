@@ -65,7 +65,7 @@
                                 >
                                     {{
                                         typeof baTable.form.extend!.info.profile?.is_take_orders !== 'undefined'
-                                            ? yesNoValue[baTable.form.extend!.info.profile.is_take_orders] ??
+                                            ? yesNoValue[String(baTable.form.extend!.info.profile.is_take_orders)] ??
                                               baTable.form.extend!.info.profile.is_take_orders
                                             : baTable.form.extend!.info.profile.is_take_orders
                                     }}
@@ -80,7 +80,7 @@
                                 >
                                     {{
                                         typeof baTable.form.extend!.info.profile.operational_star !== 'undefined'
-                                            ? yesNoValue[baTable.form.extend!.info.profile?.operational_star] ??
+                                            ? yesNoValue[String(baTable.form.extend!.info.profile?.operational_star)] ??
                                               baTable.form.extend!.info.profile?.operational_star
                                             : baTable.form.extend!.info.profile?.operational_star
                                     }}
@@ -109,19 +109,19 @@
                                 >
                                 </elVideo>
                             </el-descriptions-item>
-                            <el-descriptions-item :label="t('shop.user.Photo')" span="2" v-if="!isEmpty(baTable.form.items!.profile?.media_img)">
+                            <el-descriptions-item :label="t('shop.user.Photo')" :span="2" v-if="!isEmpty(baTable.form.items!.profile?.media_img)">
                                 <el-image
                                     style="width: 100px; height: 100px"
                                     v-for="url in baTable.form.items!.profile?.media_img"
                                     :key="fullUrl(url)"
                                     :src="fullUrl(url)"
-                                    :preview-src-list="baTable.form.items!.profile?.media_img.map((url) => fullUrl(url))"
+                                    :preview-src-list="baTable.form.items!.profile?.media_img.map((url: string) => fullUrl(url))"
                                     fit="cover"
                                     lazy
                                     show-progress
                                 />
                             </el-descriptions-item>
-                            <el-descriptions-item :label="t('shop.user.Topic')" span="2">
+                            <el-descriptions-item :label="t('shop.user.Topic')" :span="2">
                                 <el-card shadow="always" v-for="item in baTable.form.extend!.info.topic" :key="item.id">
                                     <span v-html="item.title"></span>
                                 </el-card>
@@ -138,7 +138,7 @@
                         border
                     >
                         <el-descriptions-item :label="t('shop.user.Review Record')">
-                            <el-row class="ba-array-item" v-for="(data, rid) in baTable.form.extend.info.review" :gutter="10" :key="rid">
+                            <el-row class="ba-array-item" v-for="(data, rid) in baTable.form.extend!.info!.review" :gutter="10" :key="rid">
                                 <el-col :span="24" v-if="data.type === 0"> <b>申请时间:</b> {{ timeFormat(data.create_time) }} </el-col>
                                 <el-col :span="24" v-else-if="data.type === 1">
                                     <b>审核时间:</b> {{ timeFormat(data.update_time) }} <b>审核结果:</b> {{ reviewReplaceValue[data.status] }}
@@ -151,15 +151,15 @@
 
                     <el-descriptions title="信息变更记录" v-if="!isEmpty(baTable.form.extend!.info?.log)" :column="1" style="margin-top: 20px" border>
                         <el-descriptions-item :label="t('shop.user.Price')">
-                            {{ baTable.form.extend!.info.chat?.chat_price }}
+                            {{ baTable.form.extend!.info!.chat?.chat_price }}
                         </el-descriptions-item>
                     </el-descriptions>
-                    <el-descriptions :column="1" style="margin-top: 20px" border v-if="!isEmpty(baTable.form.extend!.info.profile)">
+                    <el-descriptions :column="1" style="margin-top: 20px" border v-if="!isEmpty(baTable.form.extend?.info?.profile)">
                         <el-descriptions-item :label="t('shop.user.Review Result')">
                             <FormItem
                                 label=""
                                 type="radio"
-                                v-model="baTable.form.extend.info.profile.status"
+                                v-model="baTable.form.extend!.info!.profile!.status"
                                 :input-attr="{
                                     border: false,
                                     content: { enable: t('shop.user.pass'), disable: t('shop.user.failed') },
@@ -167,9 +167,9 @@
                                 }"
                             />
                         </el-descriptions-item>
-                        <el-descriptions-item :label="t('shop.user.Remark')" v-if="baTable.form.extend!.info.profile.status === 'disable'">
+                        <el-descriptions-item :label="t('shop.user.Remark')" v-if="baTable.form.extend!.info!.profile!.status === 'disable'">
                             <el-input
-                                v-model="baTable.form.extend.info.profile.remark"
+                                v-model="baTable.form.extend!.info!.profile!.remark"
                                 :rows="3"
                                 maxlength="100"
                                 show-word-limit
@@ -179,7 +179,7 @@
                         </el-descriptions-item>
                         <el-descriptions-item :label="t('shop.user.Operational Star')">
                             <el-checkbox
-                                v-model="baTable.form.extend.info.profile.operational_star"
+                                v-model="baTable.form.extend!.info!.profile!.operational_star"
                                 :checked="isChecked"
                                 label=""
                                 true-value="1"
@@ -222,18 +222,18 @@ const config = useConfig()
 const baTable = inject('baTable') as baTableClass
 const formRefInfo = ref<FormInstance>()
 const { t } = useI18n()
-const stateReplaceValue = { disable: t('Disable'), enable: t('Enable') }
-const reviewReplaceValue = { disable: t('shop.user.failed'), enable: t('shop.user.pass') }
-const yesNoValue = { '0': t('no'), '1': t('yes') }
-const isChecked = computed(() => (baTable.form.extend.info!.profile.operational_star == 1 ? true : false))
+const stateReplaceValue: Record<string, string> = { disable: t('Disable'), enable: t('Enable') }
+const reviewReplaceValue: Record<string, string> = { disable: t('shop.user.failed'), enable: t('shop.user.pass') }
+const yesNoValue: Record<string, string> = { '0': t('no'), '1': t('yes') }
+const isChecked = computed(() => (baTable.form.extend?.info?.profile?.operational_star == 1 ? true : false))
 const remark = ref('')
 
 const onChangeRemark = () => {
-    if (baTable.form.extend.info.profile?.status === 'enable') {
+    if (baTable.form.extend?.info?.profile?.status === 'enable') {
         remark.value = baTable.form.extend.info.profile.remark
-        baTable.form.extend.info.profile.remark = ''
+        baTable.form.extend!.info!.profile!.remark = ''
     } else {
-        baTable.form.extend.info.profile.remark = remark.value
+        baTable.form.extend!.info!.profile!.remark = remark.value
     }
 }
 </script>

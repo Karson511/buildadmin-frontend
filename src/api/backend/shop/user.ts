@@ -12,7 +12,7 @@ export function info(id: string) {
     })
 }
 
-export function review(data) {
+export function review(data: any) {
     return createAxios({
         url: url + 'review',
         method: 'POST',
@@ -22,7 +22,7 @@ export function review(data) {
     })
 }
 
-export function approval(data) {
+export function approval(data: any) {
     return createAxios({
         url: url + 'index',
         method: 'get',

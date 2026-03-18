@@ -5,7 +5,7 @@
                 @loadedmetadata="handleLoadedMetadata"
                 :width="width"
                 :height="height"
-                :style="{ 'object-fit': fit }"
+                :style="{ objectFit: fit } as any"
                 ref="myvideo"
                 :src="src"
             ></video>
@@ -13,7 +13,12 @@
                 src="~assets/icons/play.svg"
                 style="position: absolute"
                 v-if="showPlayIcon"
-                :style="{ width: `${width / 2}px`, height: `${height / 2}px`, top: `${height / 4}px`, left: `${width / 4}px` }"
+                :style="{
+                    width: `${Number(width) / 2}px`,
+                    height: `${Number(height) / 2}px`,
+                    top: `${Number(height) / 4}px`,
+                    left: `${Number(width) / 4}px`,
+                }"
             />
         </div>
         <div v-show="!isLoaded" class="el-video-box error-box" @click="viewVideo" :style="{ width: `${width}px`, height: `${height}px` }">

@@ -192,8 +192,8 @@ export const useNavTabs = defineStore(
                     return menus[key]
                 }
                 // 从子级继续寻找
-                if (menus[key].children && menus[key].children.length) {
-                    const find = getTabsViewDataByPath(path, menus[key].children, returnType)
+                if (menus[key].children && menus[key].children!.length) {
+                    const find = getTabsViewDataByPath(path, menus[key].children!, returnType)
                     if (find) {
                         return returnType == 'above' ? menus[key] : find
                     }

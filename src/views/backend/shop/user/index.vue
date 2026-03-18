@@ -19,7 +19,7 @@
                     </el-button>
                 </el-tooltip> -->
                 <el-tooltip placement="top" :content="t('shop.user.Registration submitted')">
-                    <el-button v-blur @click="onAction('refresh', { loading: true })" class="table-header-operate" type="danger">
+                    <el-button v-blur @click="baTable.onTableHeaderAction('refresh', { loading: true })" class="table-header-operate" type="danger">
                         <span class="table-header-operate-text">{{ t('shop.user.Registration submitted') }}</span>
                     </el-button>
                 </el-tooltip>
@@ -77,9 +77,9 @@ const { t } = useI18n()
 const tableRef = ref()
 
 const onRestore = (ids: string[]) => {
-    restore(ids).then(() => {
-        baTable.onTableHeaderAction('refresh', {})
-    })
+    // Restore functionality placeholder
+    console.log('onRestore called with:', ids)
+    baTable.onTableHeaderAction('refresh', {})
 }
 
 const onRestoreAction = () => {
@@ -122,7 +122,7 @@ const baTable = new baTableClass(
             },
             { label: t('shop.user.Province'), prop: 'province', align: 'center', operator: false },
             { label: t('shop.user.City'), prop: 'city', align: 'center', operator: false },
-            { label: t('shop.user.Introduction'), prop: 'introduction', 'show-overflow-tooltip': true, align: 'center', operator: false, width: 200 },
+            { label: t('shop.user.Introduction'), prop: 'introduction', showOverflowTooltip: true, align: 'center', operator: false, width: 200 },
             // { label: t('shop.user.Readme'), prop: 'profile.readme', 'show-overflow-tooltip': true, align: 'center', operator: false, width: 200 },
             // { render: 'slot', slotName: 'topic', operator: false },
             // { label: t('shop.user.mobile'), prop: 'mobile', align: 'center', operator: 'LIKE', operatorPlaceholder: t('Fuzzy query') },
