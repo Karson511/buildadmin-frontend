@@ -1,0 +1,22 @@
+echo "🚀 Running pre-push checks..."
+
+# Run type check
+echo "Running TypeScript type check..."
+npm run typecheck
+
+if [ $? -ne 0 ]; then
+    echo "❌ Type check failed. Please fix the type errors before pushing."
+    exit 1
+fi
+
+# Run full lint check
+echo "Running full ESLint check..."
+npm run lint
+
+if [ $? -ne 0 ]; then
+    echo "❌ Lint check failed. Please fix the linting errors before pushing."
+    echo "Tip: Run 'npm run lint-fix' to auto-fix issues."
+    exit 1
+fi
+
+echo "✅ Pre-push checks passed!"

@@ -1,0 +1,14 @@
+echo "🔍 Running pre-commit checks..."
+
+# Run lint-staged on staged files
+npx lint-staged
+
+# Check exit code
+if [ $? -ne 0 ]; then
+    echo "❌ Pre-commit hooks failed. Please fix the issues and try again."
+    echo ""
+    echo "Tip: You can run 'npm run lint-fix' and 'npm run format' manually to fix issues."
+    exit 1
+fi
+
+echo "✅ Pre-commit checks passed!"
