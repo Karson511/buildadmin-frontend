@@ -140,7 +140,7 @@
                         <el-descriptions-item :label="t('shop.user.Review Record')">
                             <el-row class="ba-array-item" v-for="(data, rid) in baTable.form.extend.info.review" :gutter="10" :key="rid">
                                 <el-col :span="24" v-if="data.type === 0"> <b>申请时间:</b> {{ timeFormat(data.create_time) }} </el-col>
-                                <el-col :span="24" v-else="data.type === 1">
+                                <el-col :span="24" v-else-if="data.type === 1">
                                     <b>审核时间:</b> {{ timeFormat(data.update_time) }} <b>审核结果:</b> {{ reviewReplaceValue[data.status] }}
                                     <b>审核员:</b> {{ data.admin_name }}
                                     <span v-if="data.status == 'disable'"><b>修改指引:</b> {{ data.remark }}</span></el-col
