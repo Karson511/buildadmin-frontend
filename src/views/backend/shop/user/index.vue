@@ -4,7 +4,7 @@
         <!-- 表格顶部菜单 -->
         <!-- 'add', 'edit', 'delete', -->
         <TableHeader
-            :buttons="['refresh', 'comSearch', 'quickSearch', 'columnDisplay']"
+            :buttons="['refresh', 'add', 'comSearch', 'quickSearch', 'columnDisplay']"
             :quick-search-placeholder="t('Quick search placeholder', { fields: t('shop.user.User name') + '/' + t('shop.user.nickname') })"
         >
             <template #refreshAppend>
@@ -102,7 +102,7 @@ let optButtons: OptButton[] = [
     },
 ]
 
-// optButtons = optButtons.concat(defaultOptButtons(['edit', 'delete']))
+optButtons = optButtons.concat(defaultOptButtons(['edit', 'delete']))
 const baTable = new baTableClass(
     new baTableApi(url),
     {
@@ -200,9 +200,16 @@ const baTable = new baTableClass(
     {
         defaultItems: {
             gender: 0,
-            money: '0',
-            score: '0',
-            status: 'enable',
+            status: 'pending',
+            is_take_orders: 1,
+            operational_star: 0,
+            province_code: null,
+            city_code: null,
+            district_code: null,
+            introduction: '',
+            readme: '',
+            media_video: '',
+            media_img: '',
         },
     },
     {

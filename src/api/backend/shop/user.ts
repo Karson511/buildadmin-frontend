@@ -12,6 +12,22 @@ export function info(id: string) {
     })
 }
 
+export function add(data: any) {
+    return createAxios({
+        url: url + 'add',
+        method: 'POST',
+        data: data,
+    })
+}
+
+export function edit(data: any) {
+    return createAxios({
+        url: url + 'edit',
+        method: 'POST',
+        data: data,
+    })
+}
+
 export function review(data: any) {
     return createAxios({
         url: url + 'review',

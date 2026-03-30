@@ -21,7 +21,7 @@
                 <!-- ref 模版引用, ref 是一个特殊的 attribute，和 v-for 章节中提到的 key 类似。它允许我们在一个特定的 DOM 元素或子组件实例被挂载后，获得对它的直接引用 -->
                 <el-form
                     ref="formRef"
-                    @keyup.enter="baTable.onSubmit(formRef)"
+                    @keyup.enter="submitForm(formRef)"
                     :model="baTable.form.items"
                     :label-position="config.layout.shrink ? 'top' : 'right'"
                     :label-width="baTable.form.labelWidth + 'px'"
@@ -55,13 +55,6 @@
                         }"
                     />
                     <FormItem :label="t('shop.user.head portrait')" type="image" v-model="baTable.form.items!.avatar" />
-                    <el-form-item prop="email" :label="t('shop.user.email')">
-                        <el-input
-                            v-model="baTable.form.items!.email"
-                            type="string"
-                            :placeholder="t('Please input field', { field: t('shop.user.email') })"
-                        ></el-input>
-                    </el-form-item>
                     <el-form-item prop="mobile" :label="t('shop.user.mobile')">
                         <el-input
                             v-model="baTable.form.items!.mobile"
@@ -78,29 +71,26 @@
                             content: { 0: t('Unknown'), 1: t('shop.user.male'), 2: t('shop.user.female') },
                         }"
                     />
-                    <el-form-item :label="t('shop.user.birthday')">
-                        <el-date-picker
-                            class="w100"
-                            value-format="YYYY-MM-DD"
-                            v-model="baTable.form.items!.birthday"
-                            type="date"
-                            :placeholder="t('Please select field', { field: t('shop.user.birthday') })"
-                        />
+                    <!-- 兜底显示：如果组件无法匹配，或者作为编辑时的参考 -->
+                    <el-form-item
+                        v-if="baTable.form.operate === 'Edit' && (baTable.form.items?.province_name || baTable.form.items?.city_name)"
+                        label=" "
+                    >
+                        <span style="color: #999; font-size: 12px">
+                            {{ t('shop.user.Current selected Region') }}:
+                            {{ baTable.form.items?.province_name || '' }}
+                            {{ baTable.form.items?.city_name || '' }}
+                            {{ baTable.form.items?.district_name || '' }}
+                        </span>
                     </el-form-item>
-                    <el-form-item v-if="baTable.form.operate == 'Edit'" :label="t('shop.user.balance')">
-                        <el-input v-model="baTable.form.items!.money" readonly>
-                            <template #append>
-                                <el-button @click="changeAccount('money')">{{ t('shop.user.Adjustment balance') }}</el-button>
-                            </template>
-                        </el-input>
-                    </el-form-item>
-                    <el-form-item v-if="baTable.form.operate == 'Edit'" :label="t('shop.user.integral')">
-                        <el-input v-model="baTable.form.items!.score" readonly>
-                            <template #append>
-                                <el-button @click="changeAccount('score')">{{ t('shop.user.Adjust integral') }}</el-button>
-                            </template>
-                        </el-input>
-                    </el-form-item>
+                    <FormItem
+                        :label="t('shop.user.Region')"
+                        type="city"
+                        v-model="regionValue"
+                        :input-attr="{
+                            level: 3,
+                        }"
+                    />
                     <el-form-item prop="password" :label="t('shop.user.password')">
                         <el-input
                             v-model="baTable.form.items!.password"
@@ -112,22 +102,81 @@
                             "
                         ></el-input>
                     </el-form-item>
-                    <el-form-item prop="motto" :label="t('shop.user.Personal signature')">
+                    <el-form-item :label="t('shop.user.Introduction')">
                         <el-input
                             @keyup.enter.stop=""
                             @keyup.ctrl.enter="baTable.onSubmit(formRef)"
-                            v-model="baTable.form.items!.motto"
+                            v-model="baTable.form.items!.introduction"
                             type="textarea"
-                            :placeholder="t('Please input field', { field: t('shop.user.Personal signature') })"
+                            :placeholder="t('Please input field', { field: t('shop.user.Introduction') })"
                         ></el-input>
                     </el-form-item>
+                    <FormItem
+                        :label="t('shop.user.Take Orders')"
+                        v-model="baTable.form.items!.profile!.is_take_orders"
+                        type="radio"
+                        :input-attr="{
+                            border: true,
+                            content: { 0: t('no'), 1: t('yes') },
+                        }"
+                    />
+                    <FormItem
+                        :label="t('shop.user.Operational Star')"
+                        v-model="baTable.form.items!.profile!.operational_star"
+                        type="radio"
+                        :input-attr="{
+                            border: true,
+                            content: { 0: t('no'), 1: t('yes') },
+                        }"
+                    />
                     <FormItem
                         :label="t('State')"
                         v-model="baTable.form.items!.status"
                         type="radio"
                         :input-attr="{
                             border: true,
-                            content: { disable: t('Disable'), enable: t('Enable') },
+                            content: {
+                                pending: t('shop.user.Pending'),
+                                enable: t('Enable'),
+                                disable: t('Disable'),
+                            },
+                        }"
+                    />
+                    <el-form-item :label="t('shop.user.Readme')">
+                        <el-input
+                            @keyup.enter.stop=""
+                            @keyup.ctrl.enter="baTable.onSubmit(formRef)"
+                            v-model="baTable.form.items!.profile!.readme"
+                            type="textarea"
+                            :placeholder="t('Please input field', { field: t('shop.user.Readme') })"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item :label="t('shop.user.Video')" v-if="baTable.form.items?.profile?.media_video">
+                        <elVideo
+                            :src="fullUrl(baTable.form.items!.profile.media_video)"
+                            ref="myvideo"
+                            fit="fill"
+                            width="70"
+                            height="70"
+                            :enablePreview="true"
+                            :customPreview="false"
+                        >
+                        </elVideo>
+                    </el-form-item>
+                    <FormItem
+                        :label="t('shop.user.Video')"
+                        v-model="baTable.form.items!.profile!.media_video"
+                        type="file"
+                        :input-attr="{ accept: 'video/*', limit: 1 }"
+                    />
+                    <FormItem
+                        :label="t('shop.user.Photo')"
+                        v-model="baTable.form.items!.profile!.media_img"
+                        type="images"
+                        :input-attr="{
+                            limit: 9,
+                            accept: 'image/*',
+                            listType: 'picture-card',
                         }"
                     />
                 </el-form>
@@ -136,7 +185,7 @@
         <template #footer>
             <div :style="'width: calc(100% - ' + baTable.form.labelWidth! / 1.8 + 'px)'">
                 <el-button @click="baTable.toggleForm('')">{{ t('Cancel') }}</el-button>
-                <el-button v-blur :loading="baTable.form.submitLoading" @click="baTable.onSubmit(formRef)" type="primary">
+                <el-button v-blur :loading="baTable.form.submitLoading" @click="submitForm(formRef)" type="primary">
                     {{ baTable.form.operateIds && baTable.form.operateIds.length > 1 ? t('Save and edit next item') : t('Save') }}
                 </el-button>
             </div>
@@ -145,14 +194,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, inject, watch } from 'vue'
+import { ref, reactive, inject, watch, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type baTableClass from '/@/utils/baTable'
-import { regularPassword } from '/@/utils/validate'
+import { fullUrl } from '/@/utils/common'
 import type { FormInstance, FormItemRule } from 'element-plus'
 import FormItem from '/@/components/formItem/index.vue'
+import elVideo from './video.vue'
 import router from '/@/router/index'
-import { buildValidatorData } from '/@/utils/validate'
+import { regularPassword, buildValidatorData } from '/@/utils/validate'
 import { useConfig } from '/@/stores/config'
 
 const config = useConfig()
@@ -161,8 +211,51 @@ const baTable = inject('baTable') as baTableClass
 
 const { t } = useI18n()
 
+// 计算属性：将分散的地区代码转换为 region 数组格式
+const regionValue = computed({
+    get: () => {
+        const items = baTable.form.items
+        if (!items) return null
+
+        const codes: string[] = []
+        if (items.province_code) codes.push(String(items.province_code))
+        if (items.city_code) codes.push(String(items.city_code))
+        if (items.district_code) codes.push(String(items.district_code))
+
+        return codes.length > 0 ? codes : null
+    },
+    set: (val: any[] | null) => {
+        if (!val || val.length === 0) {
+            baTable.form.items!.province_code = null
+            baTable.form.items!.city_code = null
+            baTable.form.items!.district_code = null
+        } else {
+            baTable.form.items!.province_code = val[0] ? String(val[0]) : null
+            baTable.form.items!.city_code = val.length > 1 && val[1] ? String(val[1]) : null
+            baTable.form.items!.district_code = val.length > 2 && val[2] ? String(val[2]) : null
+        }
+    },
+})
+
 const rules: Partial<Record<string, FormItemRule[]>> = reactive({
-    username: [buildValidatorData({ name: 'required', title: t('shop.user.User name') }), buildValidatorData({ name: 'account' })],
+    username: [
+        buildValidatorData({ name: 'required', title: t('shop.user.User name') }),
+        {
+            validator: (rule: any, val: string, callback: Function) => {
+                if (!val) return callback()
+                // 简单的手机号正则 (中国大陆)
+                const isMobile = /^1[3-9]\d{9}$/.test(val)
+                // 简单的账号正则 (字母开头，允许字母数字下划线，4-16位) - 您可以根据实际需求调整
+                const isAccount = /^[a-zA-Z][a-zA-Z0-9_]{3,15}$/.test(val)
+
+                if (isMobile || isAccount) {
+                    return callback()
+                }
+                return callback(new Error(t('Please enter a valid account or mobile number')))
+            },
+            trigger: 'blur',
+        },
+    ],
     nickname: [buildValidatorData({ name: 'required', title: t('shop.user.nickname') })],
     group_id: [buildValidatorData({ name: 'required', message: t('Please select field', { field: t('shop.user.grouping') }) })],
     email: [buildValidatorData({ name: 'email', title: t('shop.user.email') })],
@@ -198,6 +291,49 @@ const changeAccount = (type: string) => {
         },
     })
 }
+
+// 自定义提交方法，处理 profile 字段
+const submitForm = async (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+
+    // 手动触发验证
+    await formEl.validate((valid) => {
+        if (valid) {
+            baTable.form.submitLoading = true
+
+            // 深拷贝一份数据用于提交，避免污染表单的响应式数据
+            let submitData = JSON.parse(JSON.stringify(baTable.form.items))
+
+            // 如果是编辑操作，确保提交数据中包含 id
+            if (baTable.form.operate === 'Edit') {
+                if (!submitData.id && baTable.form.operateIds && baTable.form.operateIds.length > 0) {
+                    submitData.id = baTable.form.operateIds[0]
+                }
+            }
+
+            // 调用 API 提交数据 (submitData 中的 profile 已经是一个 JSON 对象)
+            baTable.api
+                .postData(baTable.form.operate!, submitData)
+                .then((res) => {
+                    baTable.onTableHeaderAction('refresh', {})
+                    baTable.form.submitLoading = false
+                    baTable.form.operateIds?.shift()
+                    if (baTable.form.operateIds && baTable.form.operateIds.length > 0) {
+                        baTable.toggleForm('Edit', baTable.form.operateIds)
+                    } else {
+                        baTable.toggleForm()
+                    }
+                })
+                .catch(() => {
+                    baTable.form.submitLoading = false
+                })
+        } else {
+            // 如果验证失败，可以在这里打印日志，方便排查是哪个字段没通过
+            console.warn('表单验证未通过，请检查必填项或格式')
+        }
+    })
+}
+
 // 用于观察响应式数据的变化。当被观察的数据发生变化时，会执行指定的回调函数。
 watch(
     () => baTable.form.operate,

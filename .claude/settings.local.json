@@ -14,5 +14,10 @@
             "Bash(npx prettier)",
             "Bash(npx lint-staged)"
         ]
+    },
+    "enabledMcpjsonServers": ["planetscale"],
+    "enabledPlugins": {
+        "playwright@claude-plugins-official": true,
+        "github@claude-plugins-official": true
     }
 }

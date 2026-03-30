@@ -17,3 +17,4 @@ pnpm-debug.log*
 .umi-production
 .cache
 .dist
+.mcp.json
