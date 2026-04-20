@@ -201,15 +201,17 @@ const baTable = new baTableClass(
         defaultItems: {
             gender: 0,
             status: 'pending',
-            is_take_orders: 1,
-            operational_star: 0,
             province_code: null,
             city_code: null,
             district_code: null,
             introduction: '',
-            readme: '',
-            media_video: '',
-            media_img: '',
+            profile: {
+                is_take_orders: 1,
+                operational_star: 0,
+                readme: '',
+                media_video: '',
+                media_img: '',
+            },
         },
     },
     {

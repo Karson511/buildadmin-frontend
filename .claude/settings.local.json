@@ -15,9 +15,10 @@
             "Bash(npx lint-staged)"
         ]
     },
-    "enabledMcpjsonServers": ["planetscale"],
+    "enabledMcpjsonServers": ["planetscale", "db"],
     "enabledPlugins": {
         "playwright@claude-plugins-official": true,
         "github@claude-plugins-official": true
-    }
+    },
+    "enableAllProjectMcpServers": true
 }

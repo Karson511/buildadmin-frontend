@@ -2,7 +2,7 @@
 import { isArray } from 'lodash-es'
 import type { PropType, VNode } from 'vue'
 import { computed, createVNode, defineComponent, reactive, resolveComponent } from 'vue'
-import { getArea } from '/@/api/common'
+import { getArea, getRegion } from '/@/api/common'
 import type { InputAttr, InputData, ModelValueTypes } from '/@/components/baInput'
 import { inputTypes } from '/@/components/baInput'
 import Array from '/@/components/baInput/components/array.vue'
@@ -412,7 +412,9 @@ export default defineComponent({
                                         let nodes: Node[] = []
                                         lastLazyValue.key = key
                                         lastLazyValue.value = props.modelValue
-                                        lastLazyValue.currentRequest = getArea(pathValues).then((res) => {
+                                        const requestApi = (attrs.value as anyObj).requestApi
+                                        const loadApi = requestApi === 'region' ? getRegion : getArea
+                                        lastLazyValue.currentRequest = loadApi(pathValues).then((res) => {
                                             let toStr = false
                                             if (props.modelValue && typeof (props.modelValue as anyObj)[0] === 'string') {
                                                 toStr = true

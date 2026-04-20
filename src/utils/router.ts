@@ -102,13 +102,13 @@ export const handleFrontendRoute = (routes: any, menus: any) => {
     const memberCenter = useMemberCenter()
     const viewsComponent = import.meta.glob('/src/views/frontend/**/*.vue')
 
-    if (routes.length) {
+    if (routes && routes.length) {
         addRouteAll(viewsComponent, routes, '', true)
         memberCenter.mergeAuthNode(handleAuthNode(routes, '/'))
         siteConfig.setHeadNav(handleMenuRule(routes, '/', ['nav']))
         memberCenter.mergeNavUserMenus(handleMenuRule(routes, '/', ['nav_user_menu']))
     }
-    if (menus.length && isEmpty(memberCenter.state.viewRoutes)) {
+    if (menus && menus.length && isEmpty(memberCenter.state.viewRoutes)) {
         addRouteAll(viewsComponent, menus, memberCenterBaseRoute.name as string)
         const menuMemberCenterBaseRoute = (memberCenterBaseRoute.path as string) + '/'
         memberCenter.mergeAuthNode(handleAuthNode(menus, menuMemberCenterBaseRoute))

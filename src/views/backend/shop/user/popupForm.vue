@@ -71,6 +71,18 @@
                             content: { 0: t('Unknown'), 1: t('shop.user.male'), 2: t('shop.user.female') },
                         }"
                     />
+                    <FormItem
+                        :label="t('State')"
+                        v-model="baTable.form.items!.status"
+                        type="radio"
+                        :input-attr="{
+                            border: true,
+                            content: {
+                                enable: t('Enable'),
+                                disable: t('Disable'),
+                            },
+                        }"
+                    />
                     <!-- 兜底显示：如果组件无法匹配，或者作为编辑时的参考 -->
                     <el-form-item
                         v-if="baTable.form.operate === 'Edit' && (baTable.form.items?.province_name || baTable.form.items?.city_name)"
@@ -89,6 +101,7 @@
                         v-model="regionValue"
                         :input-attr="{
                             level: 3,
+                            requestApi: 'region',
                         }"
                     />
                     <el-form-item prop="password" :label="t('shop.user.password')">
@@ -130,8 +143,9 @@
                         }"
                     />
                     <FormItem
-                        :label="t('State')"
-                        v-model="baTable.form.items!.status"
+                        v-if="baTable.form.operate === 'Edit'"
+                        :label="t('shop.user.Review Result')"
+                        v-model="baTable.form.items!.profile!.status"
                         type="radio"
                         :input-attr="{
                             border: true,
@@ -217,10 +231,13 @@ const regionValue = computed({
         const items = baTable.form.items
         if (!items) return null
 
-        const codes: string[] = []
-        if (items.province_code) codes.push(String(items.province_code))
-        if (items.city_code) codes.push(String(items.city_code))
-        if (items.district_code) codes.push(String(items.district_code))
+        const codes: number[] = []
+        const provinceCode = Number(items.province_code)
+        const cityCode = Number(items.city_code)
+        const districtCode = Number(items.district_code)
+        if (!Number.isNaN(provinceCode) && provinceCode > 0) codes.push(provinceCode)
+        if (!Number.isNaN(cityCode) && cityCode > 0) codes.push(cityCode)
+        if (!Number.isNaN(districtCode) && districtCode > 0) codes.push(districtCode)
 
         return codes.length > 0 ? codes : null
     },
@@ -230,9 +247,9 @@ const regionValue = computed({
             baTable.form.items!.city_code = null
             baTable.form.items!.district_code = null
         } else {
-            baTable.form.items!.province_code = val[0] ? String(val[0]) : null
-            baTable.form.items!.city_code = val.length > 1 && val[1] ? String(val[1]) : null
-            baTable.form.items!.district_code = val.length > 2 && val[2] ? String(val[2]) : null
+            baTable.form.items!.province_code = val[0] ? Number(val[0]) : null
+            baTable.form.items!.city_code = val.length > 1 && val[1] ? Number(val[1]) : null
+            baTable.form.items!.district_code = val.length > 2 && val[2] ? Number(val[2]) : null
         }
     },
 })
@@ -292,6 +309,19 @@ const changeAccount = (type: string) => {
     })
 }
 
+const normalizeMediaImg = (mediaImg: unknown): string[] => {
+    if (Array.isArray(mediaImg)) {
+        return mediaImg.filter((item): item is string => typeof item === 'string' && item.trim() !== '').map((item) => item.trim())
+    }
+    if (typeof mediaImg === 'string') {
+        return mediaImg
+            .split(',')
+            .map((item) => item.trim())
+            .filter((item) => item !== '')
+    }
+    return []
+}
+
 // 自定义提交方法，处理 profile 字段
 const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
@@ -303,6 +333,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
             // 深拷贝一份数据用于提交，避免污染表单的响应式数据
             let submitData = JSON.parse(JSON.stringify(baTable.form.items))
+            const profileData = submitData.profile || {}
+            submitData.profile = {
+                ...profileData,
+                media_img: normalizeMediaImg(profileData.media_img),
+            }
 
             // 如果是编辑操作，确保提交数据中包含 id
             if (baTable.form.operate === 'Edit') {
@@ -339,6 +374,9 @@ watch(
     () => baTable.form.operate,
     (newVal) => {
         rules.password![0].required = newVal == 'Add'
+        if (newVal === 'Add' && baTable.form.items) {
+            baTable.form.items.status = 'enable'
+        }
     }
 )
 </script>

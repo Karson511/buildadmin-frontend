@@ -19,6 +19,7 @@ import { adminBaseRoutePath } from '/@/router/static/adminBase'
 export const adminUploadUrl = '/admin/ajax/upload'
 export const adminBuildSuffixSvgUrl = adminBaseRoutePath + '/ajax/buildSuffixSvg'
 export const adminAreaUrl = '/admin/ajax/area'
+export const adminRegionUrl = '/admin/ajax/region'
 export const getTablePkUrl = '/admin/ajax/getTablePk'
 export const getTableListUrl = '/admin/ajax/getTableList'
 export const getTableFieldListUrl = '/admin/ajax/getTableFieldList'
@@ -113,6 +114,27 @@ export function getArea(values: number[]) {
     params.uuid = uuid()
     return createAxios({
         url: isAdminApp() ? adminAreaUrl : apiAreaUrl,
+        method: 'GET',
+        params: params,
+    })
+}
+
+/**
+ * 获取地区数据（region接口）
+ */
+export function getRegion(values: Array<number | string>) {
+    const params: { province?: number; city?: number; uuid?: string } = {}
+    const province = Number(values[0])
+    const city = Number(values[1])
+    if (!Number.isNaN(province) && province > 0) {
+        params.province = province
+    }
+    if (!Number.isNaN(city) && city > 0) {
+        params.city = city
+    }
+    params.uuid = uuid()
+    return createAxios({
+        url: adminRegionUrl,
         method: 'GET',
         params: params,
     })
