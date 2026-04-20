@@ -1,0 +1,99 @@
+import { e as p, m as i, X as g, o as t, h as r, l as s, P as c, W as e, _ as C, O as n } from './vue-Rh7pEvFB.js'
+import { s as v } from './store-CHZkxc9s.js'
+import k from './installConflict-CTA5dlzr.js'
+import y from './commonDone-BPWxiEP9.js'
+import B from './uploadInstall-IgHUvlRi.js'
+import D from './confirmFileConflict-BUNdtmyj.js'
+import { _ as b } from './index-BinDduO1.js'
+import './index-oT4ju-Ty.js'
+import './index-DL4HVtqZ.js'
+import './index-1fitz5rj.js'
+import './index-CY7HLGeR.js'
+const h = p({
+        __name: 'commonDialog',
+        setup(m, { expose: l }) {
+            l()
+            const a = {
+                get state() {
+                    return v
+                },
+                InstallConflict: k,
+                CommonDone: y,
+                UploadInstall: B,
+                ConfirmFileConflict: D,
+            }
+            return Object.defineProperty(a, '__isScriptSetup', { enumerable: !1, value: !0 }), a
+        },
+    }),
+    F = ['element-loading-text']
+function I(m, l, a, o, w, x) {
+    const d = i('el-scrollbar'),
+        u = i('el-dialog'),
+        f = g('loading')
+    return (
+        t(),
+        r('div', null, [
+            s(
+                u,
+                {
+                    'close-on-press-escape': o.state.common.quickClose,
+                    title: o.state.common.dialogTitle,
+                    'close-on-click-modal': o.state.common.quickClose,
+                    modelValue: o.state.dialog.common,
+                    'onUpdate:modelValue': l[0] || (l[0] = (_) => (o.state.dialog.common = _)),
+                    class: 'common-dialog',
+                },
+                {
+                    default: c(() => [
+                        s(
+                            d,
+                            { height: 500 },
+                            {
+                                default: c(() => [
+                                    e(' 公共dialog形式的loading '),
+                                    o.state.common.type == 'loading'
+                                        ? C(
+                                              (t(),
+                                              r(
+                                                  'div',
+                                                  {
+                                                      'element-loading-text': o.state.common.loadingTitle
+                                                          ? m.$t('module.stateTitle ' + o.state.common.loadingTitle)
+                                                          : '',
+                                                      key: o.state.common.loadingComponentKey,
+                                                      class: 'common-loading',
+                                                  },
+                                                  null,
+                                                  8,
+                                                  F
+                                              )),
+                                              [[f, !0]]
+                                          )
+                                        : e('v-if', !0),
+                                    e(' 安装冲突 '),
+                                    o.state.common.type == 'InstallConflict' ? (t(), n(o.InstallConflict, { key: 1 })) : e('v-if', !0),
+                                    e(' 禁用冲突 '),
+                                    o.state.common.type == 'disableConfirmConflict' ? (t(), n(o.ConfirmFileConflict, { key: 2 })) : e('v-if', !0),
+                                    e(' 安装/禁用结束 '),
+                                    o.state.common.type == 'done' ? (t(), n(o.CommonDone, { key: 3 })) : e('v-if', !0),
+                                    e(' 上传安装 '),
+                                    o.state.common.type == 'uploadInstall' ? (t(), n(o.UploadInstall, { key: 4 })) : e('v-if', !0),
+                                ]),
+                                _: 1,
+                            }
+                        ),
+                    ]),
+                    _: 1,
+                },
+                8,
+                ['close-on-press-escape', 'title', 'close-on-click-modal', 'modelValue']
+            ),
+        ])
+    )
+}
+const K = b(h, [
+    ['render', I],
+    ['__scopeId', 'data-v-38f42d33'],
+    ['__file', '/Users/hukaisheng/data/wwwroot/personal/javaScript/build-frontend/src/views/backend/module/components/commonDialog.vue'],
+])
+export { K as default }

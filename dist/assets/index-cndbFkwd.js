@@ -1,0 +1,232 @@
+import {
+    e as w,
+    v as y,
+    p as v,
+    au as F,
+    C as T,
+    m as n,
+    X as E,
+    o as p,
+    h as k,
+    k as f,
+    O as h,
+    W as o,
+    l as i,
+    P as b,
+    _ as x,
+    U as z,
+} from './vue-Rh7pEvFB.js'
+import B from './popupForm-DfwEJBfs.js'
+import { d as C, b as I, T as P, a as A } from './index-1fitz5rj.js'
+import { p as q } from './index-CY7HLGeR.js'
+import { a4 as O, a2 as D, _ as S } from './index-BinDduO1.js'
+const K = w({
+        name: 'routine/attachment',
+        __name: 'index',
+        setup(g, { expose: s }) {
+            s()
+            const { t: e } = y.useI18n(),
+                t = v(),
+                c = C(['edit', 'delete'])
+            c[1].popconfirm.title = e('routine.attachment.Files and records will be deleted at the same time Are you sure?')
+            const a = new I(new O('/admin/routine.Attachment/'), {
+                column: [
+                    { type: 'selection', align: 'center', operator: !1 },
+                    { label: e('Id'), prop: 'id', align: 'center', operator: '=', operatorPlaceholder: e('Id'), width: 70 },
+                    { label: e('utils.Breakdown'), prop: 'topic', align: 'center', operator: 'LIKE', operatorPlaceholder: e('Fuzzy query') },
+                    {
+                        label: e('routine.attachment.Upload administrator'),
+                        prop: 'admin.nickname',
+                        align: 'center',
+                        operator: 'LIKE',
+                        operatorPlaceholder: e('Fuzzy query'),
+                    },
+                    {
+                        label: e('routine.attachment.Upload user'),
+                        prop: 'user.nickname',
+                        align: 'center',
+                        operator: 'LIKE',
+                        operatorPlaceholder: e('Fuzzy query'),
+                    },
+                    {
+                        label: e('utils.size'),
+                        prop: 'size',
+                        align: 'center',
+                        formatter: (r, _, m) => {
+                            const d = parseFloat(m),
+                                l = Math.floor(Math.log(d) / Math.log(1024))
+                            return (d / Math.pow(1024, l)).toFixed(l < 1 ? 0 : 2) + ' ' + ['B', 'KB', 'MB', 'GB', 'TB'][l]
+                        },
+                        operator: 'RANGE',
+                        sortable: 'custom',
+                        operatorPlaceholder: 'bytes',
+                    },
+                    {
+                        label: e('utils.type'),
+                        prop: 'mimetype',
+                        align: 'center',
+                        operator: 'LIKE',
+                        showOverflowTooltip: !0,
+                        operatorPlaceholder: e('Fuzzy query'),
+                    },
+                    { label: e('utils.preview'), prop: 'suffix', align: 'center', formatter: q, render: 'image', operator: !1 },
+                    { label: e('utils.Upload (Reference) times'), prop: 'quote', align: 'center', width: 150, operator: 'RANGE', sortable: 'custom' },
+                    {
+                        label: e('utils.Original name'),
+                        prop: 'name',
+                        align: 'center',
+                        showOverflowTooltip: !0,
+                        operator: 'LIKE',
+                        operatorPlaceholder: e('Fuzzy query'),
+                    },
+                    {
+                        label: e('routine.attachment.Storage mode'),
+                        prop: 'storage',
+                        align: 'center',
+                        width: 100,
+                        operator: 'LIKE',
+                        operatorPlaceholder: e('Fuzzy query'),
+                    },
+                    {
+                        label: e('utils.Last upload time'),
+                        prop: 'last_upload_time',
+                        align: 'center',
+                        render: 'datetime',
+                        operator: 'RANGE',
+                        width: 160,
+                        sortable: 'custom',
+                    },
+                    { label: e('Operate'), align: 'center', width: '100', render: 'buttons', buttons: c, operator: !1 },
+                ],
+                defaultOrder: { prop: 'last_upload_time', order: 'desc' },
+            })
+            F('baTable', a),
+                T(() => {
+                    var r
+                    ;(a.table.ref = t.value),
+                        a.mount(),
+                        (r = a.getIndex()) == null ||
+                            r.then(() => {
+                                a.initSort()
+                            })
+                })
+            const u = {
+                t: e,
+                tableRef: t,
+                optBtn: c,
+                baTable: a,
+                PopupForm: B,
+                Table: A,
+                TableHeader: P,
+                get auth() {
+                    return D
+                },
+            }
+            return Object.defineProperty(u, '__isScriptSetup', { enumerable: !1, value: !0 }), u
+        },
+    }),
+    L = { class: 'default-main' },
+    R = { class: 'ba-table-box' },
+    M = { class: 'mlr-12' },
+    N = { class: 'table-header-operate-text' }
+function U(g, s, e, t, c, a) {
+    const u = n('el-alert'),
+        r = n('Icon'),
+        _ = n('el-button'),
+        m = n('el-tooltip'),
+        d = n('el-popconfirm'),
+        l = E('blur')
+    return (
+        p(),
+        k('div', L, [
+            f('div', R, [
+                t.baTable.table.remark
+                    ? (p(),
+                      h(u, { key: 0, class: 'ba-table-alert', title: t.baTable.table.remark, type: 'info', 'show-icon': '' }, null, 8, ['title']))
+                    : o('v-if', !0),
+                o(' 表格顶部菜单 '),
+                i(
+                    t.TableHeader,
+                    {
+                        buttons: ['refresh', 'edit', 'comSearch', 'quickSearch', 'columnDisplay'],
+                        'quick-search-placeholder': t.t('Quick search placeholder', { fields: t.t('utils.Original name') }),
+                    },
+                    {
+                        default: b(() => [
+                            t.auth('del')
+                                ? (p(),
+                                  h(
+                                      d,
+                                      {
+                                          key: 0,
+                                          onConfirm: s[0] || (s[0] = (G) => t.baTable.onTableHeaderAction('delete', {})),
+                                          'confirm-button-text': t.t('Delete'),
+                                          'cancel-button-text': t.t('Cancel'),
+                                          confirmButtonType: 'danger',
+                                          title: t.t('routine.attachment.Files and records will be deleted at the same time Are you sure?'),
+                                          disabled: !(t.baTable.table.selection.length > 0),
+                                      },
+                                      {
+                                          reference: b(() => [
+                                              f('div', M, [
+                                                  i(
+                                                      m,
+                                                      { content: t.t('Delete selected row'), placement: 'top' },
+                                                      {
+                                                          default: b(() => [
+                                                              x(
+                                                                  (p(),
+                                                                  h(
+                                                                      _,
+                                                                      {
+                                                                          disabled: !(t.baTable.table.selection.length > 0),
+                                                                          class: 'table-header-operate',
+                                                                          type: 'danger',
+                                                                      },
+                                                                      {
+                                                                          default: b(() => [
+                                                                              i(r, { color: '#ffffff', name: 'fa fa-trash' }),
+                                                                              f('span', N, z(t.t('Delete')), 1),
+                                                                          ]),
+                                                                          _: 1,
+                                                                      },
+                                                                      8,
+                                                                      ['disabled']
+                                                                  )),
+                                                                  [[l]]
+                                                              ),
+                                                          ]),
+                                                          _: 1,
+                                                      },
+                                                      8,
+                                                      ['content']
+                                                  ),
+                                              ]),
+                                          ]),
+                                          _: 1,
+                                      },
+                                      8,
+                                      ['confirm-button-text', 'cancel-button-text', 'title', 'disabled']
+                                  ))
+                                : o('v-if', !0),
+                        ]),
+                        _: 1,
+                    },
+                    8,
+                    ['quick-search-placeholder']
+                ),
+                o(' 表格 '),
+                o(' 要使用`el-table`组件原有的属性，直接加在Table标签上即可 '),
+                i(t.Table, { ref: 'tableRef' }, null, 512),
+                o(' 编辑和新增表单 '),
+                i(t.PopupForm),
+            ]),
+        ])
+    )
+}
+const X = S(K, [
+    ['render', U],
+    ['__scopeId', 'data-v-c35b6f00'],
+    ['__file', '/Users/hukaisheng/data/wwwroot/personal/javaScript/build-frontend/src/views/backend/routine/attachment/index.vue'],
+])
+export { X as default }
