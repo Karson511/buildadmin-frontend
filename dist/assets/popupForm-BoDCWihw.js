@@ -1,0 +1,387 @@
+import {
+    e as D,
+    v as j,
+    am as B,
+    r as h,
+    p as z,
+    D as R,
+    m as i,
+    X as p,
+    o as c,
+    h as C,
+    W as L,
+    l as r,
+    P as t,
+    k as S,
+    j as w,
+    $ as A,
+    O as U,
+    a8 as y,
+    a7 as x,
+    V,
+    U as v,
+    _ as F,
+    Z as N,
+} from './vue-Rh7pEvFB.js'
+import { c as O, e as W, _ as q } from './index-BBRbF7Py.js'
+import { F as E } from './index--JHPdKE_.js'
+import { b as T } from './validate-D9h_hteB.js'
+const K = '/admin/user.ScoreLog/'
+function M(g) {
+    return O({ url: K + 'add', method: 'get', params: { userId: g } })
+}
+const X = D({
+        __name: 'popupForm',
+        setup(g, { expose: o }) {
+            o()
+            const I = W(),
+                { t: e } = j.useI18n(),
+                m = B('baTable'),
+                k = h({
+                    user_id: [T({ name: 'required', message: e('Please select field', { field: e('user.moneyLog.User') }) })],
+                    score: [
+                        T({ name: 'required', title: e('user.moneyLog.Change amount') }),
+                        {
+                            validator: (n, d, b) =>
+                                !d || parseInt(d) == 0
+                                    ? b(new Error(e('Please enter the correct field', { field: e('user.moneyLog.Change amount') })))
+                                    : b(),
+                            trigger: 'blur',
+                        },
+                    ],
+                    memo: [T({ name: 'required', title: e('user.moneyLog.remarks') })],
+                }),
+                s = z(),
+                l = h({ userInfo: {}, after: 0 }),
+                u = () => {
+                    !m.form.items.user_id ||
+                        parseInt(m.form.items.user_id) <= 0 ||
+                        M(m.form.items.user_id).then((n) => {
+                            ;(l.userInfo = n.data.user), (l.after = n.data.user.score)
+                        })
+                },
+                _ = (n) => {
+                    if (!l.userInfo || typeof l.userInfo > 'u') {
+                        l.after = 0
+                        return
+                    }
+                    let d = n == '' ? 0 : parseFloat(n)
+                    l.after = parseFloat(l.userInfo.score) + d
+                }
+            R(
+                () => m.form.operate,
+                (n) => {
+                    n && u()
+                }
+            )
+            const f = { config: I, t: e, baTable: m, rules: k, formRef: s, state: l, getAdd: u, changeScore: _, FormItem: E }
+            return Object.defineProperty(f, '__isScriptSetup', { enumerable: !1, value: !0 }), f
+        },
+    }),
+    Z = { class: 'title' }
+function G(g, o, I, e, m, k) {
+    const s = i('el-input'),
+        l = i('el-form-item'),
+        u = i('el-form'),
+        _ = i('el-scrollbar'),
+        f = i('el-button'),
+        n = i('el-dialog'),
+        d = p('drag'),
+        b = p('zoom'),
+        P = p('blur')
+    return (
+        c(),
+        C(
+            N,
+            null,
+            [
+                L(' 对话框表单 '),
+                r(
+                    n,
+                    {
+                        class: 'ba-operate-dialog',
+                        'close-on-click-modal': !1,
+                        'model-value': ['Add', 'Edit'].includes(e.baTable.form.operate),
+                        onClose: e.baTable.toggleForm,
+                    },
+                    {
+                        header: t(() => [
+                            F((c(), C('div', Z, [V(v(e.baTable.form.operate ? e.t(e.baTable.form.operate) : ''), 1)])), [
+                                [d, ['.ba-operate-dialog', '.el-dialog__header']],
+                                [b, '.ba-operate-dialog'],
+                            ]),
+                        ]),
+                        footer: t(() => [
+                            S(
+                                'div',
+                                { style: w('width: calc(100% - ' + e.baTable.form.labelWidth / 1.8 + 'px)') },
+                                [
+                                    r(
+                                        f,
+                                        { onClick: o[10] || (o[10] = (a) => e.baTable.toggleForm('')) },
+                                        { default: t(() => [V(v(e.t('Cancel')), 1)]), _: 1 }
+                                    ),
+                                    F(
+                                        (c(),
+                                        U(
+                                            f,
+                                            {
+                                                loading: e.baTable.form.submitLoading,
+                                                onClick: o[11] || (o[11] = (a) => e.baTable.onSubmit(e.formRef)),
+                                                type: 'primary',
+                                            },
+                                            {
+                                                default: t(() => [
+                                                    V(v(e.baTable.form.operateIds.length > 1 ? e.t('Save and edit next item') : e.t('Save')), 1),
+                                                ]),
+                                                _: 1,
+                                            },
+                                            8,
+                                            ['loading']
+                                        )),
+                                        [[P]]
+                                    ),
+                                ],
+                                4
+                            ),
+                        ]),
+                        default: t(() => [
+                            r(
+                                _,
+                                { class: 'ba-table-form-scrollbar' },
+                                {
+                                    default: t(() => [
+                                        S(
+                                            'div',
+                                            {
+                                                class: A(['ba-operate-form', 'ba-' + e.baTable.form.operate + '-form']),
+                                                style: w(e.config.layout.shrink ? '' : 'width: calc(100% - ' + e.baTable.form.labelWidth / 2 + 'px)'),
+                                            },
+                                            [
+                                                e.baTable.form.loading
+                                                    ? L('v-if', !0)
+                                                    : (c(),
+                                                      U(
+                                                          u,
+                                                          {
+                                                              key: 0,
+                                                              ref: 'formRef',
+                                                              onKeyup: o[9] || (o[9] = y((a) => e.baTable.onSubmit(e.formRef), ['enter'])),
+                                                              model: e.baTable.form.items,
+                                                              'label-position': e.config.layout.shrink ? 'top' : 'right',
+                                                              'label-width': e.baTable.form.labelWidth + 'px',
+                                                              rules: e.rules,
+                                                          },
+                                                          {
+                                                              default: t(() => [
+                                                                  r(
+                                                                      e.FormItem,
+                                                                      {
+                                                                          type: 'remoteSelect',
+                                                                          prop: 'user_id',
+                                                                          label: e.t('user.moneyLog.User ID'),
+                                                                          modelValue: e.baTable.form.items.user_id,
+                                                                          'onUpdate:modelValue':
+                                                                              o[0] || (o[0] = (a) => (e.baTable.form.items.user_id = a)),
+                                                                          placeholder: e.t('Click select'),
+                                                                          'input-attr': {
+                                                                              pk: 'user.id',
+                                                                              field: 'nickname_text',
+                                                                              remoteUrl: '/admin/user.User/index',
+                                                                              onChange: e.getAdd,
+                                                                          },
+                                                                      },
+                                                                      null,
+                                                                      8,
+                                                                      ['label', 'modelValue', 'placeholder', 'input-attr']
+                                                                  ),
+                                                                  r(
+                                                                      l,
+                                                                      { label: e.t('user.moneyLog.User name') },
+                                                                      {
+                                                                          default: t(() => [
+                                                                              r(
+                                                                                  s,
+                                                                                  {
+                                                                                      modelValue: e.state.userInfo.username,
+                                                                                      'onUpdate:modelValue':
+                                                                                          o[1] || (o[1] = (a) => (e.state.userInfo.username = a)),
+                                                                                      disabled: '',
+                                                                                  },
+                                                                                  null,
+                                                                                  8,
+                                                                                  ['modelValue']
+                                                                              ),
+                                                                          ]),
+                                                                          _: 1,
+                                                                      },
+                                                                      8,
+                                                                      ['label']
+                                                                  ),
+                                                                  r(
+                                                                      l,
+                                                                      { label: e.t('user.moneyLog.User nickname') },
+                                                                      {
+                                                                          default: t(() => [
+                                                                              r(
+                                                                                  s,
+                                                                                  {
+                                                                                      modelValue: e.state.userInfo.nickname,
+                                                                                      'onUpdate:modelValue':
+                                                                                          o[2] || (o[2] = (a) => (e.state.userInfo.nickname = a)),
+                                                                                      disabled: '',
+                                                                                  },
+                                                                                  null,
+                                                                                  8,
+                                                                                  ['modelValue']
+                                                                              ),
+                                                                          ]),
+                                                                          _: 1,
+                                                                      },
+                                                                      8,
+                                                                      ['label']
+                                                                  ),
+                                                                  r(
+                                                                      l,
+                                                                      { label: e.t('user.scoreLog.Current points') },
+                                                                      {
+                                                                          default: t(() => [
+                                                                              r(
+                                                                                  s,
+                                                                                  {
+                                                                                      modelValue: e.state.userInfo.score,
+                                                                                      'onUpdate:modelValue':
+                                                                                          o[3] || (o[3] = (a) => (e.state.userInfo.score = a)),
+                                                                                      disabled: '',
+                                                                                      type: 'number',
+                                                                                  },
+                                                                                  null,
+                                                                                  8,
+                                                                                  ['modelValue']
+                                                                              ),
+                                                                          ]),
+                                                                          _: 1,
+                                                                      },
+                                                                      8,
+                                                                      ['label']
+                                                                  ),
+                                                                  r(
+                                                                      l,
+                                                                      { prop: 'score', label: e.t('user.moneyLog.Change amount') },
+                                                                      {
+                                                                          default: t(() => [
+                                                                              r(
+                                                                                  s,
+                                                                                  {
+                                                                                      onInput: e.changeScore,
+                                                                                      modelValue: e.baTable.form.items.score,
+                                                                                      'onUpdate:modelValue':
+                                                                                          o[4] || (o[4] = (a) => (e.baTable.form.items.score = a)),
+                                                                                      type: 'number',
+                                                                                      placeholder: e.t(
+                                                                                          'user.scoreLog.Please enter the change amount of points'
+                                                                                      ),
+                                                                                  },
+                                                                                  null,
+                                                                                  8,
+                                                                                  ['modelValue', 'placeholder']
+                                                                              ),
+                                                                          ]),
+                                                                          _: 1,
+                                                                      },
+                                                                      8,
+                                                                      ['label']
+                                                                  ),
+                                                                  r(
+                                                                      l,
+                                                                      { label: e.t('user.scoreLog.Points after change') },
+                                                                      {
+                                                                          default: t(() => [
+                                                                              r(
+                                                                                  s,
+                                                                                  {
+                                                                                      modelValue: e.state.after,
+                                                                                      'onUpdate:modelValue':
+                                                                                          o[5] || (o[5] = (a) => (e.state.after = a)),
+                                                                                      type: 'number',
+                                                                                      disabled: '',
+                                                                                  },
+                                                                                  null,
+                                                                                  8,
+                                                                                  ['modelValue']
+                                                                              ),
+                                                                          ]),
+                                                                          _: 1,
+                                                                      },
+                                                                      8,
+                                                                      ['label']
+                                                                  ),
+                                                                  r(
+                                                                      l,
+                                                                      { prop: 'memo', label: e.t('user.moneyLog.remarks') },
+                                                                      {
+                                                                          default: t(() => [
+                                                                              r(
+                                                                                  s,
+                                                                                  {
+                                                                                      onKeyup: [
+                                                                                          o[6] ||
+                                                                                              (o[6] = y(
+                                                                                                  x(() => {}, ['stop']),
+                                                                                                  ['enter']
+                                                                                              )),
+                                                                                          o[7] ||
+                                                                                              (o[7] = y(
+                                                                                                  x((a) => e.baTable.onSubmit(e.formRef), ['ctrl']),
+                                                                                                  ['enter']
+                                                                                              )),
+                                                                                      ],
+                                                                                      modelValue: e.baTable.form.items.memo,
+                                                                                      'onUpdate:modelValue':
+                                                                                          o[8] || (o[8] = (a) => (e.baTable.form.items.memo = a)),
+                                                                                      type: 'textarea',
+                                                                                      placeholder: e.t(
+                                                                                          'user.scoreLog.Please enter change remarks / description'
+                                                                                      ),
+                                                                                  },
+                                                                                  null,
+                                                                                  8,
+                                                                                  ['modelValue', 'placeholder']
+                                                                              ),
+                                                                          ]),
+                                                                          _: 1,
+                                                                      },
+                                                                      8,
+                                                                      ['label']
+                                                                  ),
+                                                              ]),
+                                                              _: 1,
+                                                          },
+                                                          8,
+                                                          ['model', 'label-position', 'label-width', 'rules']
+                                                      )),
+                                            ],
+                                            6
+                                        ),
+                                    ]),
+                                    _: 1,
+                                }
+                            ),
+                        ]),
+                        _: 1,
+                    },
+                    8,
+                    ['model-value', 'onClose']
+                ),
+            ],
+            2112
+        )
+    )
+}
+const H = q(X, [
+        ['render', G],
+        ['__scopeId', 'data-v-930ffadd'],
+        ['__file', '/Users/hukaisheng/data/wwwroot/personal/javaScript/build-frontend/src/views/backend/user/scoreLog/popupForm.vue'],
+    ]),
+    ee = Object.freeze(Object.defineProperty({ __proto__: null, default: H }, Symbol.toStringTag, { value: 'Module' }))
+export { H as P, M as a, ee as p, K as u }

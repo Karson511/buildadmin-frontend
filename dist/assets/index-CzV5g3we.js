@@ -1,0 +1,114 @@
+import { e as c, v as m, p as d, au as p, C as b, m as f, o as i, h as _, O as h, W as r, l as u } from './vue-Rh7pEvFB.js'
+import { b as g, d as v, T as w, a as T } from './index-tUPoOQPz.js'
+import k from './popupForm-CIWC684w.js'
+import { a4 as C, _ as y } from './index-BBRbF7Py.js'
+import './index-pVkqPv71.js'
+import './index--JHPdKE_.js'
+import './validate-D9h_hteB.js'
+const x = c({
+        name: 'user/rule',
+        __name: 'index',
+        setup(s, { expose: o }) {
+            o()
+            const { t: e } = m.useI18n(),
+                a = d(),
+                t = new g(
+                    new C('/admin/user.Rule/'),
+                    {
+                        expandAll: !1,
+                        column: [
+                            { type: 'selection', align: 'center', operator: !1 },
+                            { label: e('auth.rule.title'), prop: 'title', align: 'left', width: '200' },
+                            { label: e('auth.rule.Icon'), prop: 'icon', align: 'center', width: '60', render: 'icon', default: 'fa fa-circle-o' },
+                            { label: e('auth.rule.name'), prop: 'name', align: 'center', showOverflowTooltip: !0 },
+                            {
+                                label: e('auth.rule.type'),
+                                prop: 'type',
+                                align: 'center',
+                                render: 'tag',
+                                custom: { menu: 'danger', menu_dir: 'success', route: 'info' },
+                                replaceValue: {
+                                    menu: e('user.rule.Member center menu items'),
+                                    menu_dir: e('user.rule.Member center menu contents'),
+                                    route: e('user.rule.Normal routing'),
+                                    nav: e('user.rule.Top bar menu items'),
+                                    button: e('user.rule.Page button'),
+                                    nav_user_menu: e('user.rule.Top bar user dropdown'),
+                                },
+                            },
+                            { label: e('State'), prop: 'status', align: 'center', width: '80', render: 'switch' },
+                            { label: e('Update time'), prop: 'update_time', align: 'center', width: '160', render: 'datetime' },
+                            { label: e('Create time'), prop: 'create_time', align: 'center', width: '160', render: 'datetime' },
+                            { label: e('Operate'), align: 'center', width: '130', render: 'buttons', buttons: v() },
+                        ],
+                        dblClickNotEditColumn: [void 0, 'status'],
+                    },
+                    {
+                        defaultItems: {
+                            type: 'route',
+                            menu_type: 'tab',
+                            extend: 'none',
+                            no_login_valid: '0',
+                            keepalive: 0,
+                            status: '1',
+                            icon: 'fa fa-circle-o',
+                        },
+                    },
+                    {
+                        requestEdit: () => {
+                            t.form.items && !t.form.items.icon && (t.form.items.icon = 'fa fa-circle-o')
+                        },
+                        onSubmit: () => {
+                            t.form.items.type == 'route'
+                                ? (t.form.items.menu_type = 'tab')
+                                : ['menu', 'menu_dir', 'nav_user_menu'].includes(t.form.items.type) && (t.form.items.no_login_valid = '0')
+                        },
+                    }
+                )
+            p('baTable', t),
+                b(() => {
+                    var l
+                    ;(t.table.ref = a.value),
+                        t.mount(),
+                        (l = t.getIndex()) == null ||
+                            l.then(() => {
+                                t.dragSort()
+                            })
+                })
+            const n = { t: e, tableRef: a, baTable: t, PopupForm: k, Table: T, TableHeader: w }
+            return Object.defineProperty(n, '__isScriptSetup', { enumerable: !1, value: !0 }), n
+        },
+    }),
+    E = { class: 'default-main ba-table-box' }
+function F(s, o, e, a, t, n) {
+    const l = f('el-alert')
+    return (
+        i(),
+        _('div', E, [
+            a.baTable.table.remark
+                ? (i(), h(l, { key: 0, class: 'ba-table-alert', title: a.baTable.table.remark, type: 'info', 'show-icon': '' }, null, 8, ['title']))
+                : r('v-if', !0),
+            r(' 表格顶部菜单 '),
+            u(
+                a.TableHeader,
+                {
+                    buttons: ['refresh', 'add', 'edit', 'delete', 'unfold', 'quickSearch', 'columnDisplay'],
+                    'quick-search-placeholder': a.t('Quick search placeholder', { fields: a.t('auth.rule.Rule title') }),
+                },
+                null,
+                8,
+                ['quick-search-placeholder']
+            ),
+            r(' 表格 '),
+            r(' 要使用`el-table`组件原有的属性，直接加在Table标签上即可 '),
+            u(a.Table, { ref: 'tableRef', pagination: !1 }, null, 512),
+            r(' 表单 '),
+            u(a.PopupForm),
+        ])
+    )
+}
+const P = y(x, [
+    ['render', F],
+    ['__file', '/Users/hukaisheng/data/wwwroot/personal/javaScript/build-frontend/src/views/backend/user/rule/index.vue'],
+])
+export { P as default }
