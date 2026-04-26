@@ -95,7 +95,6 @@ onMounted(() => {
         uploadImage: {
             fieldName: 'file',
             maxFileSize: 10 * 1024 * 1024, // 10M
-            // @ts-expect-error 库类型定义缺失
             async customUpload(file: File, insertFn: ImgInsertFnType) {
                 NProgress.configure({ showSpinner: true, trickle: false })
                 NProgress.start()
@@ -115,7 +114,6 @@ onMounted(() => {
         },
         uploadVideo: {
             fieldName: 'file',
-            // @ts-expect-error 库类型定义缺失
             async customUpload(file: File, insertFn: VideoInsertFnType) {
                 NProgress.configure({ showSpinner: true, trickle: false })
                 NProgress.start()
