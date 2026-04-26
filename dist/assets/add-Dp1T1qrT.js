@@ -1,0 +1,545 @@
+import {
+    e as ge,
+    r as U,
+    o as u,
+    h as ve,
+    W as p,
+    O as f,
+    a8 as B,
+    a7 as j,
+    v as Ve,
+    p as he,
+    m as D,
+    X as M,
+    P as b,
+    l as h,
+    k as se,
+    j as me,
+    V as O,
+    U as K,
+    _ as pe,
+} from './vue-Rh7pEvFB.js'
+import { F as ye } from './index-BC54TMpd.js'
+import { c as fe, b as x } from './validate-Dr-o2ZDb.js'
+import { c as q, j as ce, _ as be, e as xe } from './index-C3vonoRT.js'
+import { i as S } from './index-DQwP9Y7u.js'
+const T = '/admin/routine.Config/',
+    P = new Map([
+        ['index', T + 'index'],
+        ['add', T + 'add'],
+        ['edit', T + 'edit'],
+        ['del', T + 'del'],
+        ['sendTestMail', T + 'sendTestMail'],
+    ])
+function qe() {
+    return q({ url: P.get('index'), method: 'get' })
+}
+function we(s, t) {
+    return q({ url: P.get(s), method: 'post', data: t }, { showSuccessMessage: !0 })
+}
+function Pe(s) {
+    return q({ url: P.get('del'), method: 'DELETE', params: { ids: s } }, { showSuccessMessage: !0 })
+}
+function je(s, t) {
+    return q({ url: P.get('sendTestMail'), method: 'POST', data: Object.assign({}, s, { testMail: t }) }, { showSuccessMessage: !0 })
+}
+const Fe = ge({
+    __name: 'createData',
+    props: {
+        dataTitle: { type: String, required: !1, default: ce.global.t('utils.Var') },
+        modelValue: {
+            type: Object,
+            required: !0,
+            default: () => ({ name: '', title: '', type: '', tip: '', rule: [], extend: '', dict: '', inputExtend: '' }),
+        },
+        options: { type: Object, required: !1 },
+        excludeInputTypes: { type: Array, required: !1, default: () => [] },
+        excludeValidatorRule: { type: Array, required: !1, default: () => [] },
+    },
+    emits: ['update:modelValue'],
+    setup(s, { expose: t, emit: V }) {
+        var m, r, w, F, E, C, _, k, I, A, a, N, z, R, W, L, G, X, H, J, Q, Y, Z, $, ee, te, le, oe, ae, ie, re, ne
+        t()
+        const { t: e } = ce.global,
+            l = s,
+            g = ['radio', 'checkbox', 'select', 'selects'],
+            i = U({
+                name: {
+                    show: ((r = (m = l.options) == null ? void 0 : m.name) == null ? void 0 : r.show) !== !1,
+                    value: l.modelValue.name,
+                    title: ((F = (w = l.options) == null ? void 0 : w.name) == null ? void 0 : F.title) ?? l.dataTitle + e('utils.Name'),
+                },
+                title: {
+                    show: ((C = (E = l.options) == null ? void 0 : E.title) == null ? void 0 : C.show) !== !1,
+                    value: l.modelValue.title,
+                    title: ((k = (_ = l.options) == null ? void 0 : _.title) == null ? void 0 : k.title) ?? l.dataTitle + e('utils.Title'),
+                },
+                type: {
+                    show: ((A = (I = l.options) == null ? void 0 : I.type) == null ? void 0 : A.show) !== !1,
+                    value: l.modelValue.type,
+                    title: ((N = (a = l.options) == null ? void 0 : a.type) == null ? void 0 : N.title) ?? l.dataTitle + e('utils.type'),
+                },
+                tip: {
+                    show: ((R = (z = l.options) == null ? void 0 : z.tip) == null ? void 0 : R.show) !== !1,
+                    value: l.modelValue.tip,
+                    title: ((L = (W = l.options) == null ? void 0 : W.tip) == null ? void 0 : L.title) ?? e('utils.Tip'),
+                },
+                rule: {
+                    show: ((X = (G = l.options) == null ? void 0 : G.rule) == null ? void 0 : X.show) !== !1,
+                    value: l.modelValue.rule,
+                    title: ((J = (H = l.options) == null ? void 0 : H.rule) == null ? void 0 : J.title) ?? e('utils.Rule'),
+                },
+                extend: {
+                    show: ((Y = (Q = l.options) == null ? void 0 : Q.extend) == null ? void 0 : Y.show) !== !1,
+                    value: l.modelValue.extend,
+                    title: (($ = (Z = l.options) == null ? void 0 : Z.extend) == null ? void 0 : $.title) ?? 'FormItem ' + e('utils.Extend'),
+                },
+                dict: {
+                    show: ((te = (ee = l.options) == null ? void 0 : ee.dict) == null ? void 0 : te.show) !== !1,
+                    value: l.modelValue.dict,
+                    title: ((oe = (le = l.options) == null ? void 0 : le.dict) == null ? void 0 : oe.title) ?? e('utils.Dict'),
+                },
+                inputExtend: {
+                    show: ((ie = (ae = l.options) == null ? void 0 : ae.inputExtend) == null ? void 0 : ie.show) !== !1,
+                    value: l.modelValue.inputExtend,
+                    title: ((ne = (re = l.options) == null ? void 0 : re.inputExtend) == null ? void 0 : ne.title) ?? 'Input ' + e('utils.Extend'),
+                },
+            }),
+            o = U({ validators: {}, inputTypes: {} }),
+            d = V,
+            n = () => {
+                d('update:modelValue', {
+                    name: i.name.value ?? '',
+                    title: i.title.value ?? '',
+                    type: i.type.value ?? '',
+                    tip: i.tip.value ?? '',
+                    rule: i.rule.value ?? [],
+                    extend: i.extend.value ?? '',
+                    dict: g.includes(i.type.value ?? '') ? i.dict.value ?? '' : '',
+                    inputExtend: i.inputExtend.value ?? '',
+                })
+            },
+            c = () => {
+                let de = {}
+                for (const y in S) l.excludeInputTypes.includes(S[y]) || (de[S[y]] = S[y])
+                o.inputTypes = de
+                let ue = {}
+                for (const y in fe) l.excludeValidatorRule.includes(y) || (ue[y] = fe[y])
+                ;(o.validators = ue), n()
+            }
+        c()
+        const v = { t: e, props: l, dictExistsType: g, form: i, state: o, emits: d, updateValue: n, dataPretreatment: c, FormItem: ye }
+        return Object.defineProperty(v, '__isScriptSetup', { enumerable: !1, value: !0 }), v
+    },
+})
+function Ee(s, t, V, e, l, g) {
+    var i, o, d, n, c, v, m, r, w, F, E, C, _, k, I, A
+    return (
+        u(),
+        ve('div', null, [
+            p(' 本组件不被 el-form 包含，方便您在其他 el-form 的任意位置使用，且没有带了一个 el-form 时会出现的负担 '),
+            p(' formitem 已经设置了 prop 属性，以便外部 el-form 添加表单验证规则 '),
+            e.form.name.show
+                ? (u(),
+                  f(
+                      e.FormItem,
+                      {
+                          key: 0,
+                          label: e.form.name.title,
+                          type: 'string',
+                          modelValue: e.form.name.value,
+                          'onUpdate:modelValue': t[0] || (t[0] = (a) => (e.form.name.value = a)),
+                          placeholder: e.t('Please input field', { field: e.form.name.title }),
+                          'input-attr': {
+                              onChange: e.updateValue,
+                              ...((o = (i = e.props.options) == null ? void 0 : i.name) == null ? void 0 : o.inputAttr),
+                          },
+                          prop: 'name',
+                      },
+                      null,
+                      8,
+                      ['label', 'modelValue', 'placeholder', 'input-attr']
+                  ))
+                : p('v-if', !0),
+            e.form.title.show
+                ? (u(),
+                  f(
+                      e.FormItem,
+                      {
+                          key: 1,
+                          label: e.form.title.title,
+                          type: 'string',
+                          modelValue: e.form.title.value,
+                          'onUpdate:modelValue': t[1] || (t[1] = (a) => (e.form.title.value = a)),
+                          placeholder: e.t('Please input field', { field: e.form.title.title }),
+                          'input-attr': {
+                              onChange: e.updateValue,
+                              ...((n = (d = e.props.options) == null ? void 0 : d.title) == null ? void 0 : n.inputAttr),
+                          },
+                          prop: 'title',
+                      },
+                      null,
+                      8,
+                      ['label', 'modelValue', 'placeholder', 'input-attr']
+                  ))
+                : p('v-if', !0),
+            e.form.type.show
+                ? (u(),
+                  f(
+                      e.FormItem,
+                      {
+                          key: 2,
+                          label: e.form.type.title,
+                          type: 'select',
+                          modelValue: e.form.type.value,
+                          'onUpdate:modelValue': t[2] || (t[2] = (a) => (e.form.type.value = a)),
+                          placeholder: e.t('Please select field', { field: e.form.type.title }),
+                          'input-attr': {
+                              onChange: e.updateValue,
+                              content: e.state.inputTypes,
+                              ...((v = (c = e.props.options) == null ? void 0 : c.type) == null ? void 0 : v.inputAttr),
+                          },
+                          prop: 'type',
+                      },
+                      null,
+                      8,
+                      ['label', 'modelValue', 'placeholder', 'input-attr']
+                  ))
+                : p('v-if', !0),
+            e.form.dict.show && e.dictExistsType.includes(e.form.type.value)
+                ? (u(),
+                  f(
+                      e.FormItem,
+                      {
+                          key: 3,
+                          label: e.form.dict.title,
+                          type: 'textarea',
+                          modelValue: e.form.dict.value,
+                          'onUpdate:modelValue': t[3] || (t[3] = (a) => (e.form.dict.value = a)),
+                          'input-attr': {
+                              rows: 3,
+                              placeholder: e.t('utils.One line at a time, without quotation marks, for example: key1=value1'),
+                              onChange: e.updateValue,
+                              ...((r = (m = e.props.options) == null ? void 0 : m.dict) == null ? void 0 : r.inputAttr),
+                          },
+                          prop: 'dict',
+                          onKeyup:
+                              t[4] ||
+                              (t[4] = B(
+                                  j(() => {}, ['stop']),
+                                  ['enter']
+                              )),
+                      },
+                      null,
+                      8,
+                      ['label', 'modelValue', 'input-attr']
+                  ))
+                : p('v-if', !0),
+            e.form.tip.show
+                ? (u(),
+                  f(
+                      e.FormItem,
+                      {
+                          key: 4,
+                          label: e.form.tip.title,
+                          type: 'string',
+                          modelValue: e.form.tip.value,
+                          'onUpdate:modelValue': t[5] || (t[5] = (a) => (e.form.tip.value = a)),
+                          placeholder: e.t('Please input field', { field: e.form.tip.title }),
+                          'input-attr': {
+                              onChange: e.updateValue,
+                              ...((F = (w = e.props.options) == null ? void 0 : w.tip) == null ? void 0 : F.inputAttr),
+                          },
+                          prop: 'tip',
+                      },
+                      null,
+                      8,
+                      ['label', 'modelValue', 'placeholder', 'input-attr']
+                  ))
+                : p('v-if', !0),
+            e.form.rule.show
+                ? (u(),
+                  f(
+                      e.FormItem,
+                      {
+                          key: 5,
+                          label: e.form.rule.title,
+                          type: 'selects',
+                          modelValue: e.form.rule.value,
+                          'onUpdate:modelValue': t[6] || (t[6] = (a) => (e.form.rule.value = a)),
+                          placeholder: e.t('Please select field', { field: e.form.rule.title }),
+                          'input-attr': {
+                              onChange: e.updateValue,
+                              content: e.state.validators,
+                              ...((C = (E = e.props.options) == null ? void 0 : E.rule) == null ? void 0 : C.inputAttr),
+                          },
+                          prop: 'rule',
+                      },
+                      null,
+                      8,
+                      ['label', 'modelValue', 'placeholder', 'input-attr']
+                  ))
+                : p('v-if', !0),
+            e.form.extend.show
+                ? (u(),
+                  f(
+                      e.FormItem,
+                      {
+                          key: 6,
+                          label: e.form.extend.title,
+                          type: 'textarea',
+                          modelValue: e.form.extend.value,
+                          'onUpdate:modelValue': t[7] || (t[7] = (a) => (e.form.extend.value = a)),
+                          'input-attr': {
+                              onChange: e.updateValue,
+                              placeholder: e.t('utils.One attribute per line without quotation marks(formitem)'),
+                              ...((k = (_ = e.props.options) == null ? void 0 : _.extend) == null ? void 0 : k.inputAttr),
+                          },
+                          prop: 'extend',
+                          onKeyup:
+                              t[8] ||
+                              (t[8] = B(
+                                  j(() => {}, ['stop']),
+                                  ['enter']
+                              )),
+                      },
+                      null,
+                      8,
+                      ['label', 'modelValue', 'input-attr']
+                  ))
+                : p('v-if', !0),
+            e.form.inputExtend.show
+                ? (u(),
+                  f(
+                      e.FormItem,
+                      {
+                          key: 7,
+                          label: e.form.inputExtend.title,
+                          type: 'textarea',
+                          modelValue: e.form.inputExtend.value,
+                          'onUpdate:modelValue': t[9] || (t[9] = (a) => (e.form.inputExtend.value = a)),
+                          'input-attr': {
+                              onChange: e.updateValue,
+                              placeholder: e.t('utils.Extended properties of Input, one line without quotation marks, such as: size=large'),
+                              ...((A = (I = e.props.options) == null ? void 0 : I.inputExtend) == null ? void 0 : A.inputAttr),
+                          },
+                          prop: 'inputExtend',
+                          onKeyup:
+                              t[10] ||
+                              (t[10] = B(
+                                  j(() => {}, ['stop']),
+                                  ['enter']
+                              )),
+                      },
+                      null,
+                      8,
+                      ['label', 'modelValue', 'input-attr']
+                  ))
+                : p('v-if', !0),
+        ])
+    )
+}
+const Ce = be(Fe, [
+        ['render', Ee],
+        ['__file', '/Users/hukaisheng/data/wwwroot/personal/javaScript/build-frontend/src/components/formItem/createData.vue'],
+    ]),
+    _e = ge({
+        __name: 'add',
+        props: { modelValue: { type: Boolean, required: !0, default: !1 }, configGroup: { type: null, required: !0, default: () => ({}) } },
+        emits: ['update:modelValue'],
+        setup(s, { expose: t, emit: V }) {
+            t()
+            const e = xe(),
+                l = s,
+                g = V,
+                i = () => {
+                    g('update:modelValue', !1)
+                },
+                { t: o } = Ve.useI18n(),
+                d = he(),
+                n = U({
+                    inputTypes: {},
+                    labelWidth: 180,
+                    submitLoading: !1,
+                    addConfig: { group: '', weigh: 0, content: '' },
+                    formItemData: {
+                        dict: `key1=value1
+key2=value2`,
+                    },
+                }),
+                c = U({
+                    group: [
+                        x({
+                            name: 'required',
+                            trigger: 'change',
+                            message: o('Please select field', { field: o('routine.config.Variable grouping') }),
+                        }),
+                    ],
+                    name: [
+                        x({ name: 'required', title: o('routine.config.Variable name') }),
+                        x({ name: 'varName', message: o('Please enter the correct field', { field: o('routine.config.Variable name') }) }),
+                    ],
+                    title: [x({ name: 'required', title: o('routine.config.Variable title') })],
+                    type: [
+                        x({ name: 'required', trigger: 'change', message: o('Please select field', { field: o('routine.config.Variable type') }) }),
+                    ],
+                    weigh: [x({ name: 'integer', title: o('routine.config.number') })],
+                }),
+                m = {
+                    config: e,
+                    props: l,
+                    emits: g,
+                    closeForm: i,
+                    t: o,
+                    formRef: d,
+                    state: n,
+                    rules: c,
+                    onAddSubmit: () => {
+                        d.value &&
+                            d.value.validate((r) => {
+                                r &&
+                                    ((n.addConfig.content = n.formItemData.dict),
+                                    delete n.formItemData.dict,
+                                    we('add', { ...n.addConfig, ...n.formItemData }).then(() => {
+                                        g('update:modelValue', !1)
+                                    }))
+                            })
+                    },
+                    FormItem: ye,
+                    CreateFormItemData: Ce,
+                }
+            return Object.defineProperty(m, '__isScriptSetup', { enumerable: !1, value: !0 }), m
+        },
+    }),
+    ke = { class: 'title' }
+function Ie(s, t, V, e, l, g) {
+    const i = D('el-form'),
+        o = D('el-scrollbar'),
+        d = D('el-button'),
+        n = D('el-dialog'),
+        c = M('drag'),
+        v = M('zoom'),
+        m = M('blur')
+    return (
+        u(),
+        f(
+            n,
+            { class: 'ba-operate-dialog', 'close-on-click-modal': !1, 'model-value': e.props.modelValue, onClose: e.closeForm },
+            {
+                header: b(() => [
+                    pe((u(), ve('div', ke, [O(K(e.t('routine.config.Add configuration item')), 1)])), [
+                        [c, ['.ba-operate-dialog', '.el-dialog__header']],
+                        [v, '.ba-operate-dialog'],
+                    ]),
+                ]),
+                footer: b(() => [
+                    se(
+                        'div',
+                        { style: me('width: calc(100% - ' + e.state.labelWidth / 1.8 + 'px)') },
+                        [
+                            h(d, { onClick: e.closeForm }, { default: b(() => [O(K(e.t('Cancel')), 1)]), _: 1 }),
+                            pe(
+                                (u(),
+                                f(
+                                    d,
+                                    { loading: e.state.submitLoading, onClick: t[4] || (t[4] = (r) => e.onAddSubmit()), type: 'primary' },
+                                    { default: b(() => [O(K(e.t('Add')), 1)]), _: 1 },
+                                    8,
+                                    ['loading']
+                                )),
+                                [[m]]
+                            ),
+                        ],
+                        4
+                    ),
+                ]),
+                default: b(() => [
+                    h(
+                        o,
+                        { class: 'ba-table-form-scrollbar' },
+                        {
+                            default: b(() => [
+                                se(
+                                    'div',
+                                    {
+                                        class: 'ba-operate-form ba-add-form',
+                                        style: me(e.config.layout.shrink ? '' : 'width: calc(100% - ' + e.state.labelWidth / 2 + 'px)'),
+                                    },
+                                    [
+                                        h(
+                                            i,
+                                            {
+                                                ref: 'formRef',
+                                                onKeyup: t[3] || (t[3] = B((r) => e.onAddSubmit(), ['enter'])),
+                                                rules: e.rules,
+                                                model: { ...e.state.addConfig, ...e.state.formItemData },
+                                                'label-position': e.config.layout.shrink ? 'top' : 'right',
+                                                'label-width': 160,
+                                            },
+                                            {
+                                                default: b(() => [
+                                                    h(
+                                                        e.FormItem,
+                                                        {
+                                                            label: e.t('routine.config.Variable grouping'),
+                                                            type: 'select',
+                                                            modelValue: e.state.addConfig.group,
+                                                            'onUpdate:modelValue': t[0] || (t[0] = (r) => (e.state.addConfig.group = r)),
+                                                            prop: 'group',
+                                                            'input-attr': { content: V.configGroup },
+                                                        },
+                                                        null,
+                                                        8,
+                                                        ['label', 'modelValue', 'input-attr']
+                                                    ),
+                                                    h(
+                                                        e.CreateFormItemData,
+                                                        {
+                                                            modelValue: e.state.formItemData,
+                                                            'onUpdate:modelValue': t[1] || (t[1] = (r) => (e.state.formItemData = r)),
+                                                        },
+                                                        null,
+                                                        8,
+                                                        ['modelValue']
+                                                    ),
+                                                    h(
+                                                        e.FormItem,
+                                                        {
+                                                            label: e.t('Weigh'),
+                                                            type: 'number',
+                                                            modelValue: e.state.addConfig.weigh,
+                                                            'onUpdate:modelValue': t[2] || (t[2] = (r) => (e.state.addConfig.weigh = r)),
+                                                            modelModifiers: { number: !0 },
+                                                            prop: 'weigh',
+                                                        },
+                                                        null,
+                                                        8,
+                                                        ['label', 'modelValue']
+                                                    ),
+                                                ]),
+                                                _: 1,
+                                            },
+                                            8,
+                                            ['rules', 'model', 'label-position']
+                                        ),
+                                    ],
+                                    4
+                                ),
+                            ]),
+                            _: 1,
+                        }
+                    ),
+                ]),
+                _: 1,
+            },
+            8,
+            ['model-value']
+        )
+    )
+}
+const Ae = be(_e, [
+        ['render', Ie],
+        ['__file', '/Users/hukaisheng/data/wwwroot/personal/javaScript/build-frontend/src/views/backend/routine/config/add.vue'],
+    ]),
+    Me = Object.freeze(Object.defineProperty({ __proto__: null, default: Ae }, Symbol.toStringTag, { value: 'Module' }))
+export { Ae as A, je as a, Me as b, Pe as d, qe as i, we as p }

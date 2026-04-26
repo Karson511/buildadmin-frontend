@@ -25,7 +25,14 @@
                 >
                     <el-descriptions v-if="!isEmpty(baTable.form.extend!.info)" :column="2" border>
                         <el-descriptions-item :label="t('shop.user.head portrait')" :rowspan="2">
-                            <el-image style="width: 50px; height: 50px" :src="fullUrl(baTable.form.extend!.info.avatar)" />
+                            <el-image
+                                style="width: 50px; height: 50px"
+                                :src="fullUrl(baTable.form.extend!.info.avatar)"
+                                :preview-src-list="[fullUrl(baTable.form.extend!.info.avatar)]"
+                                fit="cover"
+                                lazy
+                                show-progress
+                            />
                         </el-descriptions-item>
                         <el-descriptions-item :label="t('Id')">
                             {{ baTable.form.extend!.info.id }}
@@ -84,6 +91,31 @@
                                               baTable.form.extend!.info.profile?.operational_star
                                             : baTable.form.extend!.info.profile?.operational_star
                                     }}
+                                </el-tag>
+                            </el-descriptions-item>
+                            <el-descriptions-item :label="t('shop.user.Wechat Account')">
+                                {{ baTable.form.extend!.info.profile?.wechat_account || '-' }}
+                            </el-descriptions-item>
+                            <el-descriptions-item :label="t('shop.user.Wechat Contact QRCode')">
+                                <el-image
+                                    v-if="baTable.form.extend!.info.profile?.wechat_contact_qr_code"
+                                    style="width: 100px; height: 100px"
+                                    :src="fullUrl(baTable.form.extend!.info.profile?.wechat_contact_qr_code)"
+                                    :preview-src-list="[fullUrl(baTable.form.extend!.info.profile?.wechat_contact_qr_code)]"
+                                    fit="cover"
+                                    lazy
+                                    show-progress
+                                />
+                                <span v-else>-</span>
+                            </el-descriptions-item>
+                            <el-descriptions-item :width="120" :span="2" :label="t('shop.user.Services Methods')">
+                                <el-tag
+                                    v-if="baTable.form.extend!.info.profile?.services_methods !== ''"
+                                    type="success"
+                                    effect="light"
+                                    size="default"
+                                >
+                                    {{ servicesMethodsValue[baTable.form.extend!.info.profile?.services_methods] }}
                                 </el-tag>
                             </el-descriptions-item>
                             <el-descriptions-item :width="120" :span="2" :label="t('shop.user.Introduction')">
@@ -225,6 +257,10 @@ const { t } = useI18n()
 const stateReplaceValue: Record<string, string> = { disable: t('Disable'), enable: t('Enable') }
 const reviewReplaceValue: Record<string, string> = { disable: t('shop.user.failed'), enable: t('shop.user.pass') }
 const yesNoValue: Record<string, string> = { '0': t('no'), '1': t('yes') }
+const servicesMethodsValue: Record<string, string> = {
+    '1': t('shop.user.Online Booking'),
+    '2': t('shop.user.Add as Friend — No Invitation Required'),
+}
 const isChecked = computed(() => (baTable.form.extend?.info?.profile?.operational_star == 1 ? true : false))
 const remark = ref('')
 

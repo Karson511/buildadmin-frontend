@@ -25,7 +25,7 @@
     },
     "eslint.validate": ["javascript", "vue", "typescript"],
     "i18n-ally.localesPaths": ["src/lang"],
-    "cSpell.words": ["myvideo"],
+    "cSpell.words": ["myvideo", "Wechat"],
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"

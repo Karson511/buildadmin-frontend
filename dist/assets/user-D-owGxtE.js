@@ -1,4 +1,4 @@
-export default {
+const e = {
     'User name': '用户名',
     nickname: '昵称',
     grouping: '分组',
@@ -66,3 +66,4 @@ export default {
     'Online Booking': '在线预约',
     'Add as Friend — No Invitation Required': '免约加好友',
 }
+export { e as default }

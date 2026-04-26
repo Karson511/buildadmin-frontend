@@ -21,7 +21,6 @@
                 <!-- ref 模版引用, ref 是一个特殊的 attribute，和 v-for 章节中提到的 key 类似。它允许我们在一个特定的 DOM 元素或子组件实例被挂载后，获得对它的直接引用 -->
                 <el-form
                     ref="formRef"
-                    @keyup.enter="submitForm(formRef)"
                     :model="baTable.form.items"
                     :label-position="config.layout.shrink ? 'top' : 'right'"
                     :label-width="baTable.form.labelWidth + 'px'"
@@ -115,6 +114,30 @@
                             "
                         ></el-input>
                     </el-form-item>
+                    <FormItem
+                        :label="t('shop.user.Services Methods')"
+                        v-model="baTable.form.items!.profile!.services_methods"
+                        type="radio"
+                        :input-attr="{
+                            border: true,
+                            content: {
+                                1: t('shop.user.Online Booking'),
+                                2: t('shop.user.Add as Friend — No Invitation Required'),
+                            },
+                        }"
+                    />
+                    <el-form-item :label="t('shop.user.Wechat Account')">
+                        <el-input
+                            v-model="baTable.form.items!.profile!.wechat_account"
+                            type="string"
+                            :placeholder="t('Please input field', { field: t('shop.user.Wechat Account') })"
+                        ></el-input>
+                    </el-form-item>
+                    <FormItem
+                        :label="t('shop.user.Wechat Contact QRCode')"
+                        type="image"
+                        v-model="baTable.form.items!.profile!.wechat_contact_qr_code"
+                    />
                     <el-form-item :label="t('shop.user.Introduction')">
                         <el-input
                             @keyup.enter.stop=""
@@ -156,15 +179,14 @@
                             },
                         }"
                     />
-                    <el-form-item :label="t('shop.user.Readme')">
-                        <el-input
-                            @keyup.enter.stop=""
-                            @keyup.ctrl.enter="baTable.onSubmit(formRef)"
-                            v-model="baTable.form.items!.profile!.readme"
-                            type="textarea"
-                            :placeholder="t('Please input field', { field: t('shop.user.Readme') })"
-                        ></el-input>
-                    </el-form-item>
+                    <FormItem
+                        :label="t('shop.user.Readme')"
+                        type="editor"
+                        v-model="baTable.form.items!.profile!.readme"
+                        :input-attr="{
+                            editorType: 'wang',
+                        }"
+                    />
                     <el-form-item :label="t('shop.user.Video')" v-if="baTable.form.items?.profile?.media_video">
                         <elVideo
                             :src="fullUrl(baTable.form.items!.profile.media_video)"
@@ -299,15 +321,15 @@ const rules: Partial<Record<string, FormItemRule[]>> = reactive({
     ],
 })
 
-const changeAccount = (type: string) => {
-    baTable.toggleForm()
-    router.push({
-        name: type == 'money' ? 'user/moneyLog' : 'user/scoreLog',
-        query: {
-            user_id: baTable.form.items!.id,
-        },
-    })
-}
+// const changeAccount = (type: string) => {
+//     baTable.toggleForm()
+//     router.push({
+//         name: type == 'money' ? 'user/moneyLog' : 'user/scoreLog',
+//         query: {
+//             user_id: baTable.form.items!.id,
+//         },
+//     })
+// }
 
 const normalizeMediaImg = (mediaImg: unknown): string[] => {
     if (Array.isArray(mediaImg)) {
@@ -337,6 +359,10 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             submitData.profile = {
                 ...profileData,
                 media_img: normalizeMediaImg(profileData.media_img),
+                services_methods:
+                    profileData.services_methods === '' || profileData.services_methods === undefined || profileData.services_methods === null
+                        ? null
+                        : Number(profileData.services_methods),
             }
 
             // 如果是编辑操作，确保提交数据中包含 id
@@ -376,6 +402,8 @@ watch(
         rules.password![0].required = newVal == 'Add'
         if (newVal === 'Add' && baTable.form.items) {
             baTable.form.items.status = 'enable'
+            if (!baTable.form.items.profile) baTable.form.items.profile = {}
+            if (!baTable.form.items.profile.services_methods) baTable.form.items.profile.services_methods = 1
         }
     }
 )
