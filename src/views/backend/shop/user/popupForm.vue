@@ -126,7 +126,7 @@
                             },
                         }"
                     />
-                    <el-form-item :label="t('shop.user.Wechat Account')">
+                    <el-form-item prop="profile.wechat_account" :label="t('shop.user.Wechat Account')">
                         <el-input
                             v-model="baTable.form.items!.profile!.wechat_account"
                             type="string"
@@ -134,6 +134,7 @@
                         ></el-input>
                     </el-form-item>
                     <FormItem
+                        prop="profile.wechat_contact_qr_code"
                         :label="t('shop.user.Wechat Contact QRCode')"
                         type="image"
                         v-model="baTable.form.items!.profile!.wechat_contact_qr_code"
@@ -276,6 +277,24 @@ const regionValue = computed({
     },
 })
 
+const hasValue = (value: unknown): boolean => {
+    if (Array.isArray(value)) return value.length > 0
+    if (typeof value === 'string') return value.trim() !== ''
+    return value !== null && value !== undefined
+}
+
+const validateServiceContact = (_rule: any, _val: unknown, callback: Function) => {
+    const serviceMethod = Number(baTable.form.items?.profile?.services_methods)
+    if (serviceMethod !== 2) return callback()
+
+    const profile = baTable.form.items?.profile
+    const hasWechatAccount = hasValue(profile?.wechat_account)
+    const hasWechatQrcode = hasValue(profile?.wechat_contact_qr_code)
+    if (hasWechatAccount || hasWechatQrcode) return callback()
+
+    return callback(new Error('服务方式为免约加好友时，微信号和微信联系二维码至少填写一个'))
+}
+
 const rules: Partial<Record<string, FormItemRule[]>> = reactive({
     username: [
         buildValidatorData({ name: 'required', title: t('shop.user.User name') }),
@@ -317,6 +336,18 @@ const rules: Partial<Record<string, FormItemRule[]>> = reactive({
                 return callback()
             },
             trigger: 'blur',
+        },
+    ],
+    'profile.wechat_account': [
+        {
+            validator: validateServiceContact,
+            trigger: ['blur', 'change'],
+        },
+    ],
+    'profile.wechat_contact_qr_code': [
+        {
+            validator: validateServiceContact,
+            trigger: ['change', 'blur'],
         },
     ],
 })
