@@ -1,0 +1,20 @@
+const t = {
+    name: '会员规格名称',
+    member_type: '会员类型',
+    member_type_gold: '黄金会员',
+    member_type_diamond: '钻石会员',
+    duration_type: '时长类型',
+    duration_type_month: '月卡',
+    duration_type_quarter: '季卡',
+    duration_type_half_year: '半年卡',
+    duration_type_year: '年卡',
+    duration_type_custom: '自定义天数',
+    duration_days: '有效天数',
+    origin_price: '原价(元)',
+    sale_price: '售价(元)',
+    status_off: '下架',
+    status_on: '上架',
+    created_time: '创建时间',
+    updated_time: '更新时间',
+}
+export { t as default }

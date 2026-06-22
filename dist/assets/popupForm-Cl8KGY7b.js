@@ -1,0 +1,432 @@
+import {
+    e as q,
+    p as B,
+    am as E,
+    v as R,
+    r as w,
+    i as j,
+    m as T,
+    X as v,
+    o,
+    h,
+    W as C,
+    l as n,
+    P as d,
+    _ as k,
+    O as s,
+    k as F,
+    j as L,
+    $ as z,
+    a8 as N,
+    Z as S,
+    Y as W,
+    V as x,
+    U,
+    a1 as K,
+    a2 as O,
+} from './vue-Rh7pEvFB.js'
+import { F as A } from './index-B8bcfeaY.js'
+import { b as c } from './validate-CJqnmgV4.js'
+import { e as X, an as Y, ao as Z, _ as G } from './index-BfqXFxxp.js'
+import './index-cU5Tpy6g.js'
+import './index-BL7XGxgx.js'
+const H = q({
+        __name: 'popupForm',
+        setup(m, { expose: l }) {
+            const I = X(),
+                e = B(),
+                V = E('baTable'),
+                { t } = R.useI18n(),
+                r = w({ dataFields: [] }),
+                D = w({
+                    name: [c({ name: 'required', title: t('security.sensitiveData.Rule name') })],
+                    controller: [
+                        c({
+                            name: 'required',
+                            trigger: 'change',
+                            message: t('Please select field', { field: t('security.sensitiveData.controller') }),
+                        }),
+                    ],
+                    data_table: [
+                        c({
+                            name: 'required',
+                            trigger: 'change',
+                            message: t('Please select field', { field: t('security.sensitiveData.data sheet') }),
+                        }),
+                    ],
+                    primary_key: [c({ name: 'required', trigger: 'change', title: t('security.sensitiveData.Data table primary key') })],
+                    data_fields: [
+                        c({ name: 'required', message: t('Please select field', { field: t('security.sensitiveData.Sensitive fields') }) }),
+                    ],
+                }),
+                f = (i) => {
+                    let _ = []
+                    for (const a in i) {
+                        let b = !1
+                        for (const p in r.dataFields) r.dataFields[p].name == i[a] && (b = r.dataFields[p])
+                        _[a] = b || { name: i[a], value: V.form.extend.fieldList[i[a]] ?? '' }
+                    }
+                    r.dataFields = _
+                },
+                g = () => r.dataFields,
+                u = (i) => {
+                    r.dataFields = i
+                }
+            l({ getDataFields: g, setDataFields: u })
+            const y = {
+                config: I,
+                formRef: e,
+                baTable: V,
+                t,
+                state: r,
+                rules: D,
+                onFieldChange: f,
+                getDataFields: g,
+                setDataFields: u,
+                FormItem: A,
+                get getTableListUrl() {
+                    return Z
+                },
+                get getDatabaseConnectionListUrl() {
+                    return Y
+                },
+                get isEmpty() {
+                    return j
+                },
+            }
+            return Object.defineProperty(y, '__isScriptSetup', { enumerable: !1, value: !0 }), y
+        },
+    }),
+    P = (m) => (K('data-v-f53f1ba7'), (m = m()), O(), m),
+    J = { class: 'title' },
+    M = P(() => F('hr', { class: 'form-hr' }, null, -1)),
+    Q = P(() => F('hr', { class: 'form-hr' }, null, -1))
+function $(m, l, I, e, V, t) {
+    const r = T('el-form'),
+        D = T('el-scrollbar'),
+        f = T('el-button'),
+        g = T('el-dialog'),
+        u = v('drag'),
+        y = v('zoom'),
+        i = v('loading'),
+        _ = v('blur')
+    return (
+        o(),
+        h(
+            S,
+            null,
+            [
+                C(' 对话框表单 '),
+                n(
+                    g,
+                    {
+                        class: 'ba-operate-dialog',
+                        'close-on-click-modal': !1,
+                        'model-value': ['Add', 'Edit'].includes(e.baTable.form.operate),
+                        onClose: e.baTable.toggleForm,
+                    },
+                    {
+                        header: d(() => [
+                            k((o(), h('div', J, [x(U(e.baTable.form.operate ? e.t(e.baTable.form.operate) : ''), 1)])), [
+                                [u, ['.ba-operate-dialog', '.el-dialog__header']],
+                                [y, '.ba-operate-dialog'],
+                            ]),
+                        ]),
+                        footer: d(() => [
+                            F(
+                                'div',
+                                { style: L('width: calc(100% - ' + e.baTable.form.labelWidth / 1.8 + 'px)') },
+                                [
+                                    n(
+                                        f,
+                                        { onClick: l[8] || (l[8] = (a) => e.baTable.toggleForm('')) },
+                                        { default: d(() => [x(U(e.t('Cancel')), 1)]), _: 1 }
+                                    ),
+                                    k(
+                                        (o(),
+                                        s(
+                                            f,
+                                            {
+                                                loading: e.baTable.form.submitLoading,
+                                                onClick: l[9] || (l[9] = (a) => e.baTable.onSubmit(e.formRef)),
+                                                type: 'primary',
+                                            },
+                                            {
+                                                default: d(() => [
+                                                    x(
+                                                        U(
+                                                            e.baTable.form.operateIds && e.baTable.form.operateIds.length > 1
+                                                                ? e.t('Save and edit next item')
+                                                                : e.t('Save')
+                                                        ),
+                                                        1
+                                                    ),
+                                                ]),
+                                                _: 1,
+                                            },
+                                            8,
+                                            ['loading']
+                                        )),
+                                        [[_]]
+                                    ),
+                                ],
+                                4
+                            ),
+                        ]),
+                        default: d(() => [
+                            k(
+                                (o(),
+                                s(
+                                    D,
+                                    { class: 'ba-table-form-scrollbar' },
+                                    {
+                                        default: d(() => [
+                                            F(
+                                                'div',
+                                                {
+                                                    class: z(['ba-operate-form', 'ba-' + e.baTable.form.operate + '-form']),
+                                                    style: L(
+                                                        e.config.layout.shrink ? '' : 'width: calc(100% - ' + e.baTable.form.labelWidth / 2 + 'px)'
+                                                    ),
+                                                },
+                                                [
+                                                    e.baTable.form.loading
+                                                        ? C('v-if', !0)
+                                                        : (o(),
+                                                          s(
+                                                              r,
+                                                              {
+                                                                  key: 0,
+                                                                  ref: 'formRef',
+                                                                  onKeyup: l[7] || (l[7] = N((a) => e.baTable.onSubmit(e.formRef), ['enter'])),
+                                                                  model: e.baTable.form.items,
+                                                                  'label-position': e.config.layout.shrink ? 'top' : 'right',
+                                                                  'label-width': e.baTable.form.labelWidth + 'px',
+                                                                  rules: e.rules,
+                                                              },
+                                                              {
+                                                                  default: d(() => [
+                                                                      n(
+                                                                          e.FormItem,
+                                                                          {
+                                                                              label: e.t('security.sensitiveData.Rule name'),
+                                                                              type: 'string',
+                                                                              modelValue: e.baTable.form.items.name,
+                                                                              'onUpdate:modelValue':
+                                                                                  l[0] || (l[0] = (a) => (e.baTable.form.items.name = a)),
+                                                                              prop: 'name',
+                                                                              placeholder: e.t(
+                                                                                  'security.sensitiveData.The rule name helps to identify the modified data later'
+                                                                              ),
+                                                                          },
+                                                                          null,
+                                                                          8,
+                                                                          ['label', 'modelValue', 'placeholder']
+                                                                      ),
+                                                                      n(
+                                                                          e.FormItem,
+                                                                          {
+                                                                              label: e.t('security.sensitiveData.controller'),
+                                                                              type: 'select',
+                                                                              modelValue: e.baTable.form.items.controller,
+                                                                              'onUpdate:modelValue':
+                                                                                  l[1] || (l[1] = (a) => (e.baTable.form.items.controller = a)),
+                                                                              prop: 'controller',
+                                                                              'input-attr': { content: e.baTable.form.extend.controllerList },
+                                                                              placeholder: e.t(
+                                                                                  'security.sensitiveData.The data listening mechanism will monitor the modification operations under this controller'
+                                                                              ),
+                                                                          },
+                                                                          null,
+                                                                          8,
+                                                                          ['label', 'modelValue', 'input-attr', 'placeholder']
+                                                                      ),
+                                                                      n(
+                                                                          e.FormItem,
+                                                                          {
+                                                                              label: e.t('Database connection'),
+                                                                              modelValue: e.baTable.form.items.connection,
+                                                                              'onUpdate:modelValue':
+                                                                                  l[2] || (l[2] = (a) => (e.baTable.form.items.connection = a)),
+                                                                              type: 'remoteSelect',
+                                                                              'block-help': e.t('Database connection help'),
+                                                                              'input-attr': {
+                                                                                  pk: 'key',
+                                                                                  field: 'key',
+                                                                                  remoteUrl: e.getDatabaseConnectionListUrl,
+                                                                                  onChange: e.baTable.onConnectionChange,
+                                                                              },
+                                                                          },
+                                                                          null,
+                                                                          8,
+                                                                          ['label', 'modelValue', 'block-help', 'input-attr']
+                                                                      ),
+                                                                      (o(),
+                                                                      s(
+                                                                          e.FormItem,
+                                                                          {
+                                                                              label: e.t('security.sensitiveData.Corresponding data sheet'),
+                                                                              type: 'remoteSelect',
+                                                                              modelValue: e.baTable.form.items.data_table,
+                                                                              'onUpdate:modelValue':
+                                                                                  l[3] || (l[3] = (a) => (e.baTable.form.items.data_table = a)),
+                                                                              key: e.baTable.form.items.connection,
+                                                                              'input-attr': {
+                                                                                  pk: 'table',
+                                                                                  field: 'comment',
+                                                                                  params: {
+                                                                                      connection: e.baTable.form.items.connection,
+                                                                                      samePrefix: 1,
+                                                                                      excludeTable: [
+                                                                                          'area',
+                                                                                          'token',
+                                                                                          'captcha',
+                                                                                          'admin_group_access',
+                                                                                          'admin_log',
+                                                                                          'user_money_log',
+                                                                                          'user_score_log',
+                                                                                      ],
+                                                                                  },
+                                                                                  remoteUrl: e.getTableListUrl,
+                                                                                  onChange: e.baTable.onTableChange,
+                                                                              },
+                                                                              prop: 'data_table',
+                                                                          },
+                                                                          null,
+                                                                          8,
+                                                                          ['label', 'modelValue', 'input-attr']
+                                                                      )),
+                                                                      n(
+                                                                          e.FormItem,
+                                                                          {
+                                                                              label: e.t('security.sensitiveData.Data table primary key'),
+                                                                              type: 'string',
+                                                                              modelValue: e.baTable.form.items.primary_key,
+                                                                              'onUpdate:modelValue':
+                                                                                  l[4] || (l[4] = (a) => (e.baTable.form.items.primary_key = a)),
+                                                                              prop: 'primary_key',
+                                                                          },
+                                                                          null,
+                                                                          8,
+                                                                          ['label', 'modelValue']
+                                                                      ),
+                                                                      e.isEmpty(e.baTable.form.extend.fieldSelect)
+                                                                          ? C('v-if', !0)
+                                                                          : (o(),
+                                                                            h(
+                                                                                S,
+                                                                                { key: 0 },
+                                                                                [
+                                                                                    M,
+                                                                                    k(
+                                                                                        (o(),
+                                                                                        s(
+                                                                                            e.FormItem,
+                                                                                            {
+                                                                                                label: e.t('security.sensitiveData.Sensitive fields'),
+                                                                                                type: 'selects',
+                                                                                                modelValue: e.baTable.form.items.data_fields,
+                                                                                                'onUpdate:modelValue':
+                                                                                                    l[5] ||
+                                                                                                    (l[5] = (a) =>
+                                                                                                        (e.baTable.form.items.data_fields = a)),
+                                                                                                key: e.baTable.form.extend.fieldSelectKey,
+                                                                                                prop: 'data_fields',
+                                                                                                'input-attr': {
+                                                                                                    onChange: e.onFieldChange,
+                                                                                                    content: e.baTable.form.extend.fieldSelect,
+                                                                                                },
+                                                                                            },
+                                                                                            null,
+                                                                                            8,
+                                                                                            ['label', 'modelValue', 'input-attr']
+                                                                                        )),
+                                                                                        [[i, e.baTable.form.extend.fieldLoading]]
+                                                                                    ),
+                                                                                    (o(!0),
+                                                                                    h(
+                                                                                        S,
+                                                                                        null,
+                                                                                        W(
+                                                                                            e.state.dataFields,
+                                                                                            (a, b) => (
+                                                                                                o(),
+                                                                                                s(
+                                                                                                    e.FormItem,
+                                                                                                    {
+                                                                                                        key: b,
+                                                                                                        label: a.name,
+                                                                                                        type: 'string',
+                                                                                                        modelValue: a.value,
+                                                                                                        'onUpdate:modelValue': (p) => (a.value = p),
+                                                                                                        tip: e.t(
+                                                                                                            'security.sensitiveData.Filling in field notes helps you quickly identify fields later'
+                                                                                                        ),
+                                                                                                    },
+                                                                                                    null,
+                                                                                                    8,
+                                                                                                    [
+                                                                                                        'label',
+                                                                                                        'modelValue',
+                                                                                                        'onUpdate:modelValue',
+                                                                                                        'tip',
+                                                                                                    ]
+                                                                                                )
+                                                                                            )
+                                                                                        ),
+                                                                                        128
+                                                                                    )),
+                                                                                    Q,
+                                                                                ],
+                                                                                64
+                                                                            )),
+                                                                      n(
+                                                                          e.FormItem,
+                                                                          {
+                                                                              label: e.t('State'),
+                                                                              type: 'radio',
+                                                                              modelValue: e.baTable.form.items.status,
+                                                                              'onUpdate:modelValue':
+                                                                                  l[6] || (l[6] = (a) => (e.baTable.form.items.status = a)),
+                                                                              prop: 'status',
+                                                                              'input-attr': {
+                                                                                  border: !0,
+                                                                                  content: { 0: e.t('Disable'), 1: e.t('Enable') },
+                                                                              },
+                                                                          },
+                                                                          null,
+                                                                          8,
+                                                                          ['label', 'modelValue', 'input-attr']
+                                                                      ),
+                                                                  ]),
+                                                                  _: 1,
+                                                              },
+                                                              8,
+                                                              ['model', 'label-position', 'label-width', 'rules']
+                                                          )),
+                                                ],
+                                                6
+                                            ),
+                                        ]),
+                                        _: 1,
+                                    }
+                                )),
+                                [[i, e.baTable.form.loading]]
+                            ),
+                        ]),
+                        _: 1,
+                    },
+                    8,
+                    ['model-value', 'onClose']
+                ),
+            ],
+            2112
+        )
+    )
+}
+const ie = G(H, [
+    ['render', $],
+    ['__scopeId', 'data-v-f53f1ba7'],
+    ['__file', '/Users/hukaisheng/data/wwwroot/personal/javaScript/build-frontend/src/views/backend/security/sensitiveData/popupForm.vue'],
+])
+export { ie as default }

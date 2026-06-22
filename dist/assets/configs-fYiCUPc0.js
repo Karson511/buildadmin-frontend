@@ -1,0 +1,20 @@
+const e = {
+    name: 'Name',
+    member_type: 'Member Type',
+    member_type_gold: 'Gold',
+    member_type_diamond: 'Diamond',
+    duration_type: 'Duration Type',
+    duration_type_month: 'Monthly',
+    duration_type_quarter: 'Quarterly',
+    duration_type_half_year: 'Half-Year',
+    duration_type_year: 'Yearly',
+    duration_type_custom: 'Custom Days',
+    duration_days: 'Duration Days',
+    origin_price: 'Origin Price',
+    sale_price: 'Sale Price',
+    status_off: 'Off Shelf',
+    status_on: 'On Shelf',
+    created_time: 'Created Time',
+    updated_time: 'Updated Time',
+}
+export { e as default }

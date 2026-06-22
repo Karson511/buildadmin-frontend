@@ -1,0 +1,14 @@
+import { t as e, v as o, e as a } from './index-BfqXFxxp.js'
+import './vue-Rh7pEvFB.js'
+const n = o({
+        onChanged(s) {
+            const t = a()
+            l(s), t.setLayout('isDark', s), t.onSetLayoutColor()
+        },
+    }),
+    u = e(n)
+function l(s) {
+    const t = document.getElementsByTagName('html')[0]
+    s ? t.setAttribute('class', 'dark') : t.setAttribute('class', '')
+}
+export { u as t }
