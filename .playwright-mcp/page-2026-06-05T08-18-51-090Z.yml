@@ -1,0 +1,17 @@
+- generic [ref=e1]:
+  - img
+  - generic [ref=e54]:
+    - button "" [ref=e57]
+    - generic [ref=e65]:
+      - generic [ref=e69]:
+        - generic [ref=e71]: 
+        - textbox "请输入账号" [active] [ref=e72]
+      - generic [ref=e76]:
+        - generic [ref=e78]: 
+        - textbox "请输入密码" [ref=e79]
+      - generic [ref=e80] [cursor=pointer]:
+        - generic [ref=e81]:
+          - checkbox "保持会话"
+        - generic [ref=e83]: 保持会话
+      - button "登录" [ref=e86] [cursor=pointer]:
+        - generic [ref=e87]: 登录

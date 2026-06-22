@@ -9,6 +9,9 @@ export default {
     '/': ['./frontend/${lang}/index.ts'],
     [adminBaseRoutePath + '/moduleStore']: ['./backend/${lang}/module.ts'],
     [adminBaseRoutePath + '/user/rule']: ['./backend/${lang}/auth/rule.ts'],
+    [adminBaseRoutePath + '/user/audit']: ['./backend/${lang}/user/audit.ts'],
     [adminBaseRoutePath + '/user/scoreLog']: ['./backend/${lang}/user/moneyLog.ts'],
     [adminBaseRoutePath + '/crud/crud']: ['./backend/${lang}/crud/log.ts', './backend/${lang}/crud/state.ts'],
+    [adminBaseRoutePath + '/posts/audit']: ['./backend/${lang}/posts/postAuditDrafts.ts'],
+    [adminBaseRoutePath + '/posts/posts']: ['./backend/${lang}/posts/posts.ts'],
 }

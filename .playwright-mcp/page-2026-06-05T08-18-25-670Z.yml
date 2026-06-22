@@ -1,0 +1,23 @@
+- generic [active] [ref=e1]:
+  - img
+  - generic [ref=e15]:
+    - complementary [ref=e16]:
+      - generic [ref=e17]:
+        - img "logo" [ref=e18]
+        - generic [ref=e19]: 
+      - menubar [ref=e23]
+    - generic [ref=e24]:
+      - generic [ref=e26]:
+        - generic:    
+        - generic [ref=e27]:
+          - link "首页" [ref=e28] [cursor=pointer]:
+            - /url: "#/"
+            - img [ref=e31]
+          - button [ref=e34] [cursor=pointer]:
+            - img [ref=e35]
+          - img [ref=e39] [cursor=pointer]
+          - generic [ref=e42] [cursor=pointer]: 
+      - main [ref=e43]:
+        - generic [ref=e50]:
+          - img [ref=e51]
+          - paragraph [ref=e53]: 加载中...
