@@ -18,3 +18,4 @@ pnpm-debug.log*
 .dist
 .mcp.json
 CLAUDE.md
+text.txt
