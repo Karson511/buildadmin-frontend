@@ -1,0 +1,24 @@
+[     128ms] [LOG] main.ts @ http://localhost:1818/src/main.ts:16
+[     136ms] [LOG] static, 找不到页面: /admin/user/audit @ http://localhost:1818/src/router/static.ts:51
+[     142ms] [LOG] from.path > to.path, to.fullPath:  =  /  >  /admin/loading/{"path":"%2Fadmin%2Fuser%2Faudit","query":{}} , /admin/loading/{"path":"%2Fadmin%2Fuser%2Faudit","query":{}} @ http://localhost:1818/src/router/index.ts:17
+[     143ms] [LOG] to.fullPath: /admin/loading/%7B%22path%22:%22%2Fadmin%2Fuser%2Faudit%22,%22query%22:%7B%7D%7D @ http://localhost:1818/src/router/index.ts:30
+[     143ms] [LOG] isAdminApp /admin/loading/%7B%22path%22:%22%2Fadmin%2Fuser%2Faudit%22,%22query%22:%7B%7D%7D @ http://localhost:1818/src/utils/common.ts:93
+[     143ms] [LOG] adminPath: ./backend/zh-cn/loading/%7B%22path%22:%22%2Fadmin%2Fuser%2Faudit%22,%22query%22:%7B%7D%7D.ts @ http://localhost:1818/src/router/index.ts:34
+[     144ms] [LOG] to.name: adminMainLoading @ http://localhost:1818/src/router/index.ts:42
+[     144ms] [LOG] ./backend/zh-cn/adminMainLoading.ts @ http://localhost:1818/src/router/index.ts:43
+[     243ms] [LOG] layoutMOde: @ http://localhost:1818/src/layouts/backend/index.vue:36
+[     243ms] [LOG] Default @ http://localhost:1818/src/layouts/backend/index.vue:37
+[     267ms] [LOG] isAdminApp  @ http://localhost:1818/src/utils/common.ts:93
+[     267ms] [LOG] currentRouterPath /admin/loading/%7B%22path%22:%22%2Fadmin%2Fuser%2Faudit%22,%22query%22:%7B%7D%7D @ http://localhost:1818/src/utils/common.ts:146
+[     268ms] [LOG] isAdminApp  @ http://localhost:1818/src/utils/common.ts:93
+[     268ms] [LOG] currentRouterPath /admin/loading/%7B%22path%22:%22%2Fadmin%2Fuser%2Faudit%22,%22query%22:%7B%7D%7D @ http://localhost:1818/src/utils/common.ts:146
+[     269ms] [LOG] firstRoute [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object] @ http://localhost:1818/src/utils/router.ts:38
+[     292ms] [LOG] from.path > to.path, to.fullPath:  =  /admin/loading/{"path":"%2Fadmin%2Fuser%2Faudit","query":{}}  >  /admin/login , /admin/login @ http://localhost:1818/src/router/index.ts:17
+[     292ms] [LOG] to.fullPath: /admin/login @ http://localhost:1818/src/router/index.ts:30
+[     292ms] [LOG] isAdminApp /admin/login @ http://localhost:1818/src/utils/common.ts:93
+[     292ms] [LOG] adminPath: ./backend/zh-cn/login.ts @ http://localhost:1818/src/router/index.ts:34
+[     292ms] [LOG] to.name: adminLogin @ http://localhost:1818/src/router/index.ts:42
+[     292ms] [LOG] ./backend/zh-cn/adminLogin.ts @ http://localhost:1818/src/router/index.ts:43
+[     392ms] [LOG] createAxios: http://buildapi.local.cn @ http://localhost:1818/src/utils/axios.ts:31
+[     393ms] [LOG] axiosConfig.url before:  /admin/Index/login @ http://localhost:1818/src/utils/axios.ts:41
+[     393ms] [LOG] adminBaseRoute path:  /admin @ http://localhost:1818/src/utils/axios.ts:42
